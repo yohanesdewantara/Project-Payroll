@@ -19,5 +19,9 @@ class HomeController extends Controller
     {
         return view('user_perusahaan.userb'); //menampilkan halaman user_perusahaan
     }
+    public function perusahaan()
+    {
+        return view('perusahaan.perusahaanb'); //menampilkan halaman user_perusahaan
+    }
 
 }
