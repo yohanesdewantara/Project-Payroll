@@ -136,6 +136,7 @@
                                                     onclick="return confirm('Are you sure ?')"
                                                     >
                                                     Delete</a>
+                                                    <a href ="{{url('user_perusahaan/'.$daf_user -> id_user.'/edit')}}"class = "btn btn-success mx-2">Set Jadwal & Rules</a>
                                                 </td>
                                             </tr>
 
