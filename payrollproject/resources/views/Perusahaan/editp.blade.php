@@ -85,7 +85,7 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Bootstrap
+
                 </div>
             </nav>
         </div>
@@ -99,10 +99,14 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            @if (session('status'))
-                                <div class="alert alert-succes">{{session('status')}}</div>
-
+                        @if(session('status'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Sukses!</strong> User berhasil diupdate
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
                             @endif
+
                             <div class="card">
                                 <div class="card-header">
                                     <h4>Edit User
@@ -183,7 +187,7 @@
     <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                <div class="text-muted">Copyright &copy; Payroll BCA</div>
                 <div>
                     <a href="#">Privacy Policy</a>
                     &middot;
@@ -204,6 +208,14 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+
+@if($message = Session::get('status'))
+    <script>
+        Swal.fire('{{$message}}');
+    </script>
+@endif
+
 
 </html>

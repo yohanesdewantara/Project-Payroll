@@ -30,14 +30,16 @@ Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('lo
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-// Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin.'], function () {
+
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin.'], function () {
 
 
 
 
 
 
-// });
+});
 // Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 // Route::get('/user_perusahaan', [HomeController::class, 'user_perusahaan'])->name('user_perusahaan');
 

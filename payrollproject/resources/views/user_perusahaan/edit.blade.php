@@ -21,10 +21,10 @@
 
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
+                        class="fas fa-search"></i></button> -->
             </div>
         </form>
 
@@ -38,7 +38,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -57,7 +57,7 @@
 
                         <a class="nav-link" href="{{ route('home') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            User Perusahaan
+                            Karyawan
                         </a>
 
                         <a class="nav-link" href="/home">
@@ -70,12 +70,14 @@
                             Jadwal & Rules
                         </a>
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Payroll
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="layout-static.html">Log Payroll</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
@@ -85,7 +87,7 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Bootstrap
+
                 </div>
             </nav>
         </div>
@@ -94,24 +96,45 @@
             <main>
 
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Edit User</h1>
+                    <h1 class="mt-4">Edit Karyawan</h1>
 
                     <div class="row">
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="col-md-12">
 
-                            @if (session('status'))
+                            <!-- @if (session('status'))
                                 <div class="alert alert-succes">{{session('status')}}</div>
 
+                            @endif -->
+
+                            @if(session('status'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Sukses!</strong> User berhasil dibuat
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
                             @endif
+
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Edit User
+                                    <h4>Edit Karyawan
                                         <a href="{{ url('/user_perusahaan') }}"
                                             class="btn btn-primary float-end">Kembali</a>
 
                                     </h4>
                                 </div>
                                 <div class="card-body">
+
                                     <!-- isi konten -->
                                     <form action="{{ url('user_perusahaan/' . $user_perusahaan->id_user . '/update') }}"
                                         method="POST">
@@ -140,9 +163,17 @@
 
                                         </div>
                                         <div class="mb3">
-                                            <label>Alamat</label>
-                                            <textarea name="alamat" class="form-control"
-                                                rows="3">{{$user_perusahaan->alamat}} </textarea>
+                                            <label>Bank</label>
+                                            <!-- <input type="text" name="alamat" class="form-control"
+                                                value="{{$user_perusahaan->alamat}}" /> -->
+                                            <select name="alamat" id="alamat" class="form-control" required>
+                                                <option value="">-- Pilih Bank --</option>
+                                                <option value="BCA">BCA</option>
+                                                <option value="Mandiri">Mandiri</option>
+                                                <option value="BNI">BNI</option>
+                                                <option value="BRI">BRI</option>
+                                                <option value="CIMB Niaga">CIMB Niaga</option>
+                                            </select>
                                             @error ('alamat')<span class="text-danger">{{ $message }}</span> @enderror
 
                                         </div>
@@ -185,7 +216,7 @@
     <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                <div class="text-muted">Copyright &copy; Payroll BCA</div>
                 <div>
                     <a href="#">Privacy Policy</a>
                     &middot;
@@ -206,6 +237,12 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+@if($message = Session::get('status'))
+    <script>
+        Swal.fire('{{$message}}');
+    </script>
+@endif
 
 </html>

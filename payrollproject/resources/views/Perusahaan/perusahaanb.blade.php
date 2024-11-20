@@ -21,10 +21,10 @@
 
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
+                        class="fas fa-search"></i></button> -->
             </div>
         </form>
 
@@ -38,7 +38,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -70,12 +70,14 @@
                             Jadwal & Rules
                         </a>
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Payroll
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="layout-static.html">Log Payroll</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
@@ -85,7 +87,7 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Start Bootstrap
+
                 </div>
             </nav>
         </div>
@@ -101,13 +103,14 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4>Daftar Perusahaan
-                                        <a href="{{url('perusahaan/createp')}}" class="btn btn-primary float-end">Tambah Perusahaan</a>
+                                        <a href="{{url('perusahaan/createp')}}" class="btn btn-primary float-end">Tambah
+                                            Perusahaan</a>
                                     </h4>
                                 </div>
                                 <div class="card-body">
                                     <!-- isi konten -->
 
-                                     <table class="table table-bordered table-striped">
+                                    <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>ID Perusahaan</th>
@@ -121,27 +124,26 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($perusahaan as $daf_perusahaan)
-                                            <tr>
-                                                <td>{{$daf_perusahaan -> id_perusahaan}}</td>
-                                                <td>{{$daf_perusahaan -> nama_perusahaan}}</td>
-                                                <td>{{$daf_perusahaan -> alamat}}</td>
-                                                <td>{{$daf_perusahaan -> nohp_perusahaan}}</td>
-                                                <td>{{$daf_perusahaan -> norek_perusahaan}}</td>
-                                                <td>
-                                                    <a href ="{{url('perusahaan/'.$daf_perusahaan -> id_perusahaan.'/edit')}}"class = "btn btn-success mx-2">Edit</a>
-                                                    <a
-                                                    href = "{{url('perusahaan/'.$daf_perusahaan -> id_perusahaan.'/delete')}}"
-                                                    class="btn btn-danger mx-1"
-                                                    onclick="return confirm('Are you sure ?')"
-                                                    >
-                                                    Delete</a>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>{{$daf_perusahaan->id_perusahaan}}</td>
+                                                    <td>{{$daf_perusahaan->nama_perusahaan}}</td>
+                                                    <td>{{$daf_perusahaan->alamat}}</td>
+                                                    <td>{{$daf_perusahaan->nohp_perusahaan}}</td>
+                                                    <td>{{$daf_perusahaan->norek_perusahaan}}</td>
+                                                    <td>
+                                                        <a href="{{url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/edit')}}"
+                                                            class="btn btn-success mx-2">Ubah</a>
+                                                        <a class="btn btn-danger mx-1 btn-delete"
+                                                            data-id="{{ $daf_perusahaan->id_perusahaan }}"
+                                                            data-url="{{ url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/delete') }}">
+                                                            Hapus</a>
+                                                    </td>
+                                                </tr>
 
                                             @endforeach
 
                                         </tbody>
-                                     </table>
+                                    </table>
 
                                 </div>
 
@@ -161,7 +163,7 @@
     <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                <div class="text-muted">Copyright &copy; Payroll BCA</div>
                 <div>
                     <a href="#">Privacy Policy</a>
                     &middot;
@@ -182,6 +184,42 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Cari semua tombol dengan class 'btn-delete'
+        const deleteButtons = document.querySelectorAll('.btn-delete');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const userId = this.getAttribute('data-id');
+                const deleteUrl = this.getAttribute('data-url');
+
+                // SweetAlert2 pop-up
+                Swal.fire({
+                    title: "Anda yakin?",
+                    text: "Data karyawan ini akan dihapus secara permanen!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Ya, hapus!",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirect ke URL delete
+                        window.location.href = deleteUrl;
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+
 </body>
 
 </html>
