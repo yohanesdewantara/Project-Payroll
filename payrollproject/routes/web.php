@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JadwalGajiController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PerusahaanController;
+
 
 
 /*
@@ -24,6 +26,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/user_perusahaan', [UserController::class, 'user_perusahaan']);
 Route::get('/perusahaan', [PerusahaanController::class, 'perusahaan']);
+Route::get('/jadwal_gaji', [JadwalGajiController::class, 'jadwal_gaji']);
+
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
@@ -68,6 +72,8 @@ Route::put('/perusahaan/{id_perusahaan}/update', [PerusahaanController::class, '
 Route::get('perusahaan/{id_perusahaan}/delete', [PerusahaanController::class, 'destroy']); //ini buat hapus data user
 
 
+
+Route::get('/jadwal_gaji/tambahjadwal', [App\Http\Controllers\JadwalGajiController::class, 'tambahjadwal']);
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
 });

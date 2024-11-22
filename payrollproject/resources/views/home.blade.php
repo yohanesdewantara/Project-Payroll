@@ -59,7 +59,7 @@
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
+                        <a class="nav-link" href="{{ url('/jadwal_gaji') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
                             Jadwal & Rules
                         </a>

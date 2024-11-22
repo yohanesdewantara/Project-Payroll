@@ -44,13 +44,24 @@ class LoginController extends Controller
         //     return redirect()->route('login')->with('failed', 'Username atau Password salah');
         // }
 
+        // if (Auth::guard('super_admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        //     return redirect()->route('home')->with('success', 'Selamat datang, Super Admin!');
+        // } elseif (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        //     return redirect()->route('home')->with('success', 'Login berhasil sebagai Admin.');
+        // } else {
+        //     return redirect()->route('login')->with('failed', 'Username atau Password salah');
+        // }
+
         if (Auth::guard('super_admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
             return redirect()->route('home')->with('success', 'Selamat datang, Super Admin!');
         } elseif (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
             return redirect()->route('home')->with('success', 'Login berhasil sebagai Admin.');
+        } elseif (Auth::guard('admin_payroll')->attempt(['username' => $request->username, 'password' => $request->password])) {
+            return redirect()->route('home')->with('success', 'Login berhasil sebagai Admin Payroll.');
         } else {
             return redirect()->route('login')->with('failed', 'Username atau Password salah');
         }
+
 
 
 

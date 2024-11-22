@@ -21,7 +21,15 @@ class HomeController extends Controller
     }
     public function perusahaan()
     {
-        return view('perusahaan.perusahaanb'); //menampilkan halaman user_perusahaan
+        return view('perusahaan.perusahaanb'); //menampilkan halaman perusahaan
     }
+
+    public function jadwal_gaji()
+    {
+        return view('jadwal_gaji.jadwal_gaji'); //menampilkan halaman perusahaan
+    }
+
+
+
 
 }

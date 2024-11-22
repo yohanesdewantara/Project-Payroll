@@ -49,6 +49,10 @@ return [
         'driver' => 'session',
         'provider' => 'super_admin',
     ],
+    'admin_payroll' => [
+        'driver' => 'session',
+        'provider' => 'admin_payrolls',
+    ],
 ],
 
 
@@ -82,6 +86,11 @@ return [
         'driver' => 'eloquent',
         'model' => App\Models\SuperAdmin::class,
     ],
+    'admin_payrolls' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\AdminPayroll::class,
+    ],
+
 ],
 
     /*
