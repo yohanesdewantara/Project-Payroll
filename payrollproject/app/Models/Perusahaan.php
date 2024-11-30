@@ -21,7 +21,8 @@ class Perusahaan extends Model
         'nama_perusahaan',
         'alamat',
         'nohp_perusahaan',
-        'norek_perusahaan'
+        'norek_perusahaan',
+        'saldo'
 
 
     ];

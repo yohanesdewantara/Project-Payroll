@@ -65,10 +65,11 @@
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Jadwal & Rules
+                        <a class="nav-link" href="/jadwal_gaji">
+                            <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
+                            Jadwal & Penggajian
                         </a>
+
 
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"

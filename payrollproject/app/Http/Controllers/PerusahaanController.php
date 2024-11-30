@@ -23,7 +23,8 @@ class PerusahaanController extends Controller
             'nama_perusahaan' => 'required|max : 255|string',
             'alamat' =>'required|max : 125|string',
             'nohp_perusahaan' =>'required|max : 20|string',
-            'norek_perusahaan' =>'required|max : 50|string'
+            'norek_perusahaan' =>'required|max : 50|string',
+            'saldo' => 'nullable|numeric|min:0'
 
 
         ]);
@@ -31,7 +32,8 @@ class PerusahaanController extends Controller
             'nama_perusahaan' => $request->nama_perusahaan,
             'alamat' => $request->alamat,
             'nohp_perusahaan' => $request->nohp_perusahaan,
-            'norek_perusahaan' => $request->norek_perusahaan
+            'norek_perusahaan' => $request->norek_perusahaan,
+            'saldo' =>$request->saldo
 
         ]);
         return redirect('perusahaan/createp')->with('status','Perusahaan berhasil dibuat');
@@ -52,14 +54,16 @@ class PerusahaanController extends Controller
             'nama_perusahaan' => 'required|max : 255|string',
             'alamat' =>'required|max : 125|string',
             'nohp_perusahaan' =>'required|max : 20|string',
-            'norek_perusahaan' =>'required|max : 50|string'
+            'norek_perusahaan' =>'required|max : 50|string',
+            'saldo' => 'nullable|numeric|min:0'
 
         ]);
         Perusahaan::findOrFail($id_perusahaan)->update([
             'nama_perusahaan' => $request->nama_perusahaan,
             'alamat' => $request->alamat,
             'nohp_perusahaan' => $request->nohp_perusahaan,
-            'norek_perusahaan' => $request->norek_perusahaan
+            'norek_perusahaan' => $request->norek_perusahaan,
+            'saldo' =>$request->saldo
         ]);
         return redirect()->back()->with('status','Perusahaan berhasil di update');
 

@@ -11,6 +11,18 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        .is-invalid {
+            border-color: red;
+            background-color: #f8d7da;  /* Warna latar belakang merah muda untuk memperjelas */
+        }
+
+        .is-invalid:focus {
+            border-color: darkred;  /* Warna merah lebih gelap saat input difokuskan */
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); /* Efek focus pada border */
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -65,10 +77,12 @@
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Jadwal & Rules
+                        <a class="nav-link" href="/jadwal_gaji">
+                            <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
+                            Jadwal & Penggajian
                         </a>
+
+
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -136,70 +150,71 @@
                                     <form action="{{ url('/user_perusahaan/create') }}" method="POST">
                                         @csrf
 
-                                        <div class="mb3">
+                                        <div class="mb-3">
                                             <label>Nama</label>
-                                            <input type="text" name="nama_user" class="form-control"
-                                                value="{{old('nama_user')}}" />
-
-                                            @error ('nama_user')<span class="text-danger">{{ $message }}</span>
+                                            <input type="text" name="nama_user"
+                                                class="form-control @error('nama_user') is-invalid @enderror"
+                                                value="{{ old('nama_user') }}" />
+                                            @error('nama_user')
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
-
                                         </div>
-                                        <!-- <div class="mb3">
-                                            <label>id_user</label>
-                                            <input type="text" name="id_user" val classue="{{old('id_user')}}"/>
-                                        </div> -->
-                                        <div class="mb3">
+
+                                        <div class="mb-3">
                                             <label>Jabatan</label>
-                                            <input type="text" name="jabatan" class="form-control"
-                                                value="{{old('jabatan')}}" />
-
-                                            @error ('jabatan')<span class="text-danger">{{ $message }}</span> @enderror
-
+                                            <input type="text" name="jabatan"
+                                                class="form-control @error('jabatan') is-invalid @enderror"
+                                                value="{{ old('jabatan') }}" />
+                                            @error('jabatan')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        <div class="mb3">
+
+                                        <div class="mb-3">
                                             <label>Bank</label>
-                                            <!-- <input type="text" name="alamat" class="form-control"
-                                                value="{{old('alamat')}}" /> -->
-                                            <select name="alamat" id="alamat" class="form-control" required>
+                                            <select name="alamat" id="alamat"
+                                                class="form-control @error('alamat') is-invalid @enderror" required>
                                                 <option value="">-- Pilih Bank --</option>
-                                                <option value="BCA">BCA</option>
-                                                <option value="Mandiri">Mandiri</option>
-                                                <option value="BNI">BNI</option>
-                                                <option value="BRI">BRI</option>
-                                                <option value="CIMB Niaga">CIMB Niaga</option>
+                                                <option value="BCA" {{ old('alamat') == 'BCA' ? 'selected' : '' }}>BCA
+                                                </option>
+                                                <option value="Mandiri" {{ old('alamat') == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                                <option value="BNI" {{ old('alamat') == 'BNI' ? 'selected' : '' }}>BNI
+                                                </option>
+                                                <option value="BRI" {{ old('alamat') == 'BRI' ? 'selected' : '' }}>BRI
+                                                </option>
+                                                <option value="CIMB Niaga" {{ old('alamat') == 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga</option>
                                             </select>
-                                            @error ('alamat')<span class="text-danger">{{ $message }}</span> @enderror
-
+                                            @error('alamat')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        <!-- <div class="mb3">
-                                            <label>Gaji</label>
-                                            <input type="text" name="gaji" class="form-control"
-                                                value="{{old('gaji')}}" />
-                                            @error ('gaji')<span class="text-danger">{{ $message }}</span> @enderror
-
-                                        </div> -->
 
                                         <div class="mb-3">
                                             <label for="gaji">Gaji</label>
-                                            <input type="text" id="gaji" name="gaji" class="form-control"
+                                            <input type="text" id="gaji" name="gaji"
+                                                class="form-control @error('gaji') is-invalid @enderror"
                                                 value="{{ old('gaji') }}" />
-                                            @error('gaji') <span class="text-danger">{{ $message }}</span> @enderror
-                                        </div>
-
-                                        <div class="mb3">
-                                            <label>Nomor rekening user</label>
-                                            <input type="text" name="norek_user" class="form-control"
-                                                value="{{old('norek_user')}}" />
-                                            @error ('norek_user')<span class="text-danger">{{ $message }}</span>
+                                            @error('gaji')
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
-
                                         </div>
-                                        <div class="mb3">
+
+                                        <div class="mb-3">
+                                            <label>Nomor rekening user</label>
+                                            <input type="text" name="norek_user"
+                                                class="form-control @error('norek_user') is-invalid @enderror"
+                                                value="{{ old('norek_user') }}" />
+                                            @error('norek_user')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
                                             <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
+                                    </form>
 
-                                        </ffor>
+
 
                                 </div>
 

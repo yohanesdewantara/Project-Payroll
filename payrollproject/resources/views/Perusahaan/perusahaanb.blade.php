@@ -65,10 +65,12 @@
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Jadwal & Rules
+                        <a class="nav-link" href="/jadwal_gaji">
+                            <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
+                            Jadwal & Penggajian
                         </a>
+
+
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -118,6 +120,7 @@
                                                 <th>Alamat</th>
                                                 <th>No telp</th>
                                                 <th>Nomor Rekening</th>
+                                                <th>Saldo</th>
                                                 <th>Opsi</th>
 
                                             </tr>
@@ -130,6 +133,7 @@
                                                     <td>{{$daf_perusahaan->alamat}}</td>
                                                     <td>{{$daf_perusahaan->nohp_perusahaan}}</td>
                                                     <td>{{$daf_perusahaan->norek_perusahaan}}</td>
+                                                    <td>Rp{{ number_format($daf_perusahaan->saldo, 2, ',', '.') }}</td>
                                                     <td>
                                                         <a href="{{url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/edit')}}"
                                                             class="btn btn-success mx-2">Ubah</a>

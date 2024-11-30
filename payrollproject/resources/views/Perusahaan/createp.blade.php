@@ -65,17 +65,21 @@
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Jadwal & Rules
+                        <a class="nav-link" href="/jadwal_gaji">
+                            <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
+                            Jadwal & Penggajian
                         </a>
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Payroll
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="layout-static.html">Log Payroll</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
@@ -99,7 +103,7 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                        @if(session('status'))
+                            @if(session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <strong>Sukses!</strong> User berhasil dibuat
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
@@ -110,20 +114,22 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4>Tambah Perusahaan
-                                    <a href="{{ url('/perusahaan') }}" class="btn btn-primary float-end">Kembali</a>
+                                        <a href="{{ url('/perusahaan') }}" class="btn btn-primary float-end">Kembali</a>
 
                                     </h4>
                                 </div>
                                 <div class="card-body">
                                     <!-- isi konten -->
-                                     <form action="{{ url('/perusahaan/createp') }}" method="POST">
+                                    <form action="{{ url('/perusahaan/createp') }}" method="POST">
                                         @csrf
 
                                         <div class="mb3">
                                             <label>Nama Perusahaan</label>
-                                            <input type="text" name="nama_perusahaan" class="form-control" value="{{old('nama_perusahaan')}}"/>
+                                            <input type="text" name="nama_perusahaan" class="form-control"
+                                                value="{{old('nama_perusahaan')}}" />
 
-                                            @error ('nama_perusahaan')<span class="text-danger">{{ $message }}</span> @enderror
+                                            @error ('nama_perusahaan')<span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
                                         <!-- <div class="mb3">
@@ -132,30 +138,43 @@
                                         </div> -->
                                         <div class="mb3">
                                             <label>Alamat</label>
-                                            <textarea name="alamat" class="form-control"rows="3">{{old('alamat')}} </textarea>
+                                            <textarea name="alamat" class="form-control"
+                                                rows="3">{{old('alamat')}} </textarea>
                                             @error ('alamat')<span class="text-danger">{{ $message }}</span> @enderror
 
                                         </div>
 
                                         <div class="mb3">
                                             <label>No telp</label>
-                                            <input type="text" name="nohp_perusahaan" class="form-control"value="{{old('nohp_perusahaan')}}"/>
+                                            <input type="text" name="nohp_perusahaan" class="form-control"
+                                                value="{{old('nohp_perusahaan')}}" />
 
-                                            @error ('nohp_perusahaan')<span class="text-danger">{{ $message }}</span> @enderror
+                                            @error ('nohp_perusahaan')<span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
 
                                         <div class="mb3">
                                             <label>Nomor rekening perusahaan</label>
-                                            <input type="text" name="norek_perusahaan" class="form-control"value="{{old('norek_perusahaan')}}"/>
-                                            @error ('norek_perusahaan')<span class="text-danger">{{ $message }}</span> @enderror
+                                            <input type="text" name="norek_perusahaan" class="form-control"
+                                                value="{{old('norek_perusahaan')}}" />
+                                            @error ('norek_perusahaan')<span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
+
                                         <div class="mb3">
-                                           <button type="submit" class="btn btn-primary">Save</button>
+                                            <label>Saldo Awal</label>
+                                            <input type="number" step="0.01" name="saldo" class="form-control"
+                                                value="{{ old('saldo') }}" />
+                                            @error('saldo') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
 
-                                     </ffor>
+                                        <div class="mb3">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+
+                                        </ffor>
 
                                 </div>
 

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\PayrollController;
+
+
 
 
 
@@ -27,11 +30,18 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/user_perusahaan', [UserController::class, 'user_perusahaan']);
 Route::get('/perusahaan', [PerusahaanController::class, 'perusahaan']);
 Route::get('/jadwal_gaji', [JadwalGajiController::class, 'jadwal_gaji']);
+// Route::get('/jadwal-gaji', [JadwalGajiController::class, 'showJadwalGaji']);
+Route::get('/jadwal_gaji', [JadwalGajiController::class, 'jadwal_gaji'])->name('jadwal_gaji');
+Route::post('/process-payroll', [PayrollController::class, 'processPayroll'])->name('processPayroll');
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::post('/jadwal_gaji/set', [PayrollController::class, 'setJadwalGaji'])->name('setJadwalGaji');
+
 
 
 
@@ -74,6 +84,15 @@ Route::get('perusahaan/{id_perusahaan}/delete', [PerusahaanController::class, 'd
 
 
 Route::get('/jadwal_gaji/tambahjadwal', [App\Http\Controllers\JadwalGajiController::class, 'tambahjadwal']);
+Route::post('/jadwal_gaji/set', [PayrollController::class, 'setJadwalGaji'])->name('setJadwalGaji');
+
+
+Route::get('/jadwal-gaji/tambah', [JadwalGajiController::class, 'tambahjadwal'])->name('jadwal_gaji.tambahjadwal');
+Route::get('/jadwal_gaji/tambahjadwal', [JadwalGajiController::class, 'create'])->name('jadwal_gaji.tambahjadwal');
+Route::get('/jadwal_gaji/tambahjadwal', [JadwalGajiController::class, 'create'])->name('jadwal_gaji.tambahjadwal');
+
+
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
 });

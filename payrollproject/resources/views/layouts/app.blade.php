@@ -11,6 +11,17 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .is-invalid {
+            border-color: red;
+            background-color: #f8d7da;  /* Warna latar belakang merah muda untuk memperjelas */
+        }
+
+        .is-invalid:focus {
+            border-color: darkred;  /* Warna merah lebih gelap saat input difokuskan */
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); /* Efek focus pada border */
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">

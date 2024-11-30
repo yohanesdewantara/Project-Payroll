@@ -11,6 +11,24 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Menyesuaikan ukuran dropdown */
+        #bank {
+            width: 250px;
+            /* Menetapkan lebar dropdown secara eksplisit */
+            padding: 8px;
+            /* Padding untuk mempercantik tampilan */
+            font-size: 14px;
+            /* Ukuran font lebih kecil */
+        }
+
+        .form-select {
+            max-width: 100%;
+            /* Membatasi ukuran dropdown agar tidak melampaui lebar container */
+        }
+    </style>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -65,10 +83,13 @@
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Jadwal & Rules
+                        <a class="nav-link" href="/jadwal_gaji">
+                            <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
+                            Jadwal & Penggajian
                         </a>
+
+
+
 
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -97,40 +118,140 @@
             <main>
 
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Jadwal Penggajian</h1>
+                    <h1 class="mt-4">Penggajian</h1>
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+
+
+                    <form action="{{ route('jadwal_gaji') }}" method="GET">
+                        <div class="row mb-3">
+                            <div class="col-md-12 d-flex align-items-center">
+                                <label for="bank" class="form-label fw-bold">Pilih Bank :</label>
+                                <div class="dropdown ms-3">
+                                    <select name="bank" id="bank" class="form-select" onchange="this.form.submit()"
+                                        aria-label="Pilih Bank">
+                                        <option value="">-- Semua Bank --</option>
+                                        @foreach ($banks as $bank)
+                                            <option value="{{ $bank }}" {{ request('bank') == $bank ? 'selected' : '' }}>
+                                                {{ $bank }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+
+
+                    <label for="perusahaan" class="form-label fw-bold">Saldo Perusahaan :</label>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            @if ($perusahaan)
+                                <div class="alert alert-info">
+                                    Saldo Perusahaan: Rp{{ number_format($perusahaan->saldo, 2, ',', '.') }}
+                                </div>
+                            @else
+                                <div class="alert alert-warning">
+                                    Perusahaan dengan ID 6 tidak ditemukan.
+                                </div>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Jadwal Penggajian
+                                    <h4>Daftar Karyawan
 
-                                        <a href="{{url('jadwal_gaji/tambahjadwal')}}"
-                                            class="btn btn-primary float-end">Buat Jadwal</a>
+                                    <a href="{{url('jadwal_gaji/tambahjadwal')}}"
+                                    class="btn btn-primary float-end">Tambah Jadwal</a>
                                     </h4>
-                                </div>
-                                <div class="card-body">
-
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Nama</th>
-                                                <th>Bank</th>
-                                                <th>Gaji</th>
-                                                <th>Tanggal</th>
-                                                <th>Jam</th>
-                                                <th>Opsi</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-
-                                        </tbody>
-                                    </table>
 
                                 </div>
+                                <!-- Form untuk memilih karyawan -->
+                                <!-- Form untuk memilih karyawan -->
+                                <form action="{{ route('processPayroll') }}" method="POST">
+                                    <!-- <input type="date" name="jadwal_gaji_tanggal" required>
+                                <input type="time" name="jadwal_gaji_jam" required>
+                                <input type="hidden" name="user_ids[]" value="user_id_1">
+                                <input type="hidden" name="user_ids[]" value="user_id_2"> -->
+                                    <input type="hidden" name="perusahaan_id" value="{{ $perusahaan->id_perusahaan }}">
+
+                                    @csrf
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <label for="user_ids" class="form-label fw-bold">Pilih Karyawan untuk
+                                                Pembayaran Gaji:</label>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="select_all"> Pilih
+                                                Semua
+                                            </div>
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Nama</th>
+                                                        <th>Bank</th>
+                                                        <th>Gaji</th>
+                                                        <th>Nomor Rekening</th>
+                                                        <th>Status</th>
+                                                        <th>Jadwal</th>
+                                                        <th>Pilih</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    @foreach ($user_perusahaan as $daf_user)
+                                                        <tr>
+                                                            <td>{{ $daf_user->id_user }}</td>
+                                                            <td>{{ $daf_user->nama_user }}</td>
+                                                            <td>{{ $daf_user->alamat }}</td>
+                                                            <td>Rp{{ number_format($daf_user->gaji, 2, ',', '.') }}</td>
+                                                            <td>{{ $daf_user->norek_user }}</td>
+                                                            <td>{{ $daf_user->status }}</td>
+                                                            <td>
+    @if($daf_user->jadwal_gaji_tanggal)
+        {{ \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->isValid() ? \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->format('d-m-Y') : 'Tanggal tidak valid' }}
+        at {{ $daf_user->jadwal_gaji_jam ?? '---' }}
+    @else
+        'Belum Dijadwalkan'
+    @endif
+</td>
+
+                                                            <td>
+                                                                <input type="checkbox" class="user-checkbox"
+                                                                    name="user_ids[]" value="{{ $daf_user->id_user }}">
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Proses Penggajian</button>
+                                </form>
+
 
                             </div>
                         </div>
@@ -172,35 +293,82 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Cari semua tombol dengan class 'btn-delete'
-        const deleteButtons = document.querySelectorAll('.btn-delete');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cari semua tombol dengan class 'btn-delete'
+            const deleteButtons = document.querySelectorAll('.btn-delete');
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const userId = this.getAttribute('data-id');
-                const deleteUrl = this.getAttribute('data-url');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const userId = this.getAttribute('data-id');
+                    const deleteUrl = this.getAttribute('data-url');
 
-                // SweetAlert2 pop-up
-                Swal.fire({
-                    title: "Anda yakin?",
-                    text: "Data karyawan ini akan dihapus secara permanen!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#d33",
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Ya, hapus!",
-                    cancelButtonText: "Batal"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect ke URL delete
-                        window.location.href = deleteUrl;
+                    // SweetAlert2 pop-up
+                    Swal.fire({
+                        title: "Anda yakin?",
+                        text: "Data karyawan ini akan dihapus secara permanen!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Ya, hapus!",
+                        cancelButtonText: "Batal"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect ke URL delete
+                            window.location.href = deleteUrl;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Pilih Semua checkbox
+            const selectAllCheckbox = document.getElementById('select_all');
+            const userCheckboxes = document.querySelectorAll('.user-checkbox');
+
+            // Event listener untuk "Pilih Semua"
+            selectAllCheckbox.addEventListener('change', function () {
+                userCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = selectAllCheckbox.checked; // Centang semua checkbox karyawan sesuai dengan status "Pilih Semua"
+                });
+            });
+
+            // Jika salah satu checkbox karyawan diubah, pastikan "Pilih Semua" diperbarui
+            userCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    if (!this.checked) {
+                        selectAllCheckbox.checked = false; // Jika ada checkbox yang tidak dicentang, hilangkan centang pada "Pilih Semua"
+                    } else {
+                        selectAllCheckbox.checked = Array.from(userCheckboxes).every(function (checkbox) {
+                            return checkbox.checked; // Jika semua checkbox dicentang, centang "Pilih Semua"
+                        });
                     }
                 });
             });
         });
-    });
-</script>
+    </script>
+
+    @if($message = Session::get('error'))
+        <script>
+            Swal.fire('{{$message}}');
+        </script>
+    @endif
+
+    @if($message = Session::get('success'))
+        <script>
+            Swal.fire('{{$message}}');
+        </script>
+    @endif
+
+    @if($message = Session::get('status'))
+        <script>
+            Swal.fire('{{$message}}');
+        </script>
+    @endif
+
 
 
 </body>

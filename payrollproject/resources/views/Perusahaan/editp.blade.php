@@ -65,10 +65,11 @@
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Jadwal & Rules
+                        <a class="nav-link" href="/jadwal_gaji">
+                            <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
+                            Jadwal & Penggajian
                         </a>
+
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -163,6 +164,17 @@
                                             @enderror
 
                                         </div>
+
+                                        <div class="mb3">
+                                            <label>Saldo</label>
+                                            <input type="text" name="saldo" class="form-control"
+                                                value="{{$perusahaan->saldo}}" />
+
+                                            @error ('saldo')<span class="text-danger">{{ $message }}</span> @enderror
+
+                                        </div>
+
+
                                         <div class="mb3">
                                             <button type="submit" class="btn btn-primary">Update</button>
                                         </div>

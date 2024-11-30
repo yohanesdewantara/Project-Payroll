@@ -11,20 +11,38 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Menyesuaikan ukuran dropdown */
+        #bank {
+            width: 250px;
+            /* Menetapkan lebar dropdown secara eksplisit */
+            padding: 8px;
+            /* Padding untuk mempercantik tampilan */
+            font-size: 14px;
+            /* Ukuran font lebih kecil */
+        }
+
+        .form-select {
+            max-width: 100%;
+            /* Membatasi ukuran dropdown agar tidak melampaui lebar container */
+        }
+    </style>
+
 </head>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="{{ url('/perusahaan') }}">Payroll BCA</a>
+        <a class="navbar-brand ps-3" href="{{ url('/user_perusahaan') }}">Payroll BCA</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
 
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
                     aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
+                        class="fas fa-search"></i></button> -->
             </div>
         </form>
 
@@ -38,7 +56,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -55,27 +73,31 @@
                             Dashboard
                         </a>
 
-                        <a class="nav-link" href="{{ route('home') }}">
+                        <a class="nav-link" href="/user_perusahaan">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            User Perusahaan
+                            Karyawan
                         </a>
 
-                        <a class="nav-link" href="/home">
+                        <a class="nav-link" href="/perusahaan">
                             <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
                             Perusahaan
                         </a>
 
-                        <a class="nav-link" href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-check"></i></div>
-                            Jadwal & Rules
+                        <a class="nav-link" href="/jadwal_gaji">
+                            <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
+                            Jadwal & Penggajian
                         </a>
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Payroll
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="layout-static.html">Log Payroll</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
@@ -90,85 +112,100 @@
             </nav>
         </div>
 
+
         <div id="layoutSidenav_content">
             <main>
 
+
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Tambah Perusahaan</h1>
+                    <h1 class="mt-4">Penggajian</h1>
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
-                    <div class="row">
-                        <div class="col-md-12">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-                        @if(session('status'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Sukses!</strong> User berhasil dibuat
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                                </div>
-                            @endif
 
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Tambah Jadwal
-                                    <a href="{{ url('/jadwal_gaji') }}" class="btn btn-primary float-end">Kembali</a>
 
-                                    </h4>
-                                </div>
-                                <div class="card-body">
-                                    <!-- isi konten -->
-                                     <form action="{{ url('/jadwal_gaji/tambahjadwal') }}" method="POST">
-                                        @csrf
 
-                                        <div class="mb3">
-                                            <label>Nama Karyawan</label>
-                                            <input type="text" name="nama_perusahaan" class="form-control" value="{{old('nama_perusahaan')}}"/>
 
-                                            @error ('nama_perusahaan')<span class="text-danger">{{ $message }}</span> @enderror
+                    <form action="{{ route('setJadwalGaji') }}" method="POST">
 
-                                        </div>
-                                        <!-- <div class="mb3">
-                                            <label>id_user</label>
-                                            <input type="text" name="id_user" val classue="{{old('id_user')}}"/>
-                                        </div> -->
-                                        <div class="mb3">
-                                            <label>Bank</label>
-                                            <textarea name="alamat" class="form-control"rows="3">{{old('alamat')}} </textarea>
-                                            @error ('alamat')<span class="text-danger">{{ $message }}</span> @enderror
 
-                                        </div>
+                        @csrf
+                        <div class="mb-3">
+                            <label for="jadwal_gaji_tanggal" class="form-label">Tanggal Gaji:</label>
+                            <input type="date" id="jadwal_gaji_tanggal" name="jadwal_gaji_tanggal" class="form-control"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jadwal_gaji_jam" class="form-label">Jam Gaji:</label>
+                            <input type="time" id="jadwal_gaji_jam" name="jadwal_gaji_jam" class="form-control"
+                                required>
+                        </div>
+                        <a href="{{ url('/jadwal_gaji') }}"
+                        class="btn btn-primary float-end">Kembali</a>
 
-                                        <div class="mb3">
-                                            <label>No telp</label>
-                                            <input type="text" name="nohp_perusahaan" class="form-control"value="{{old('nohp_perusahaan')}}"/>
-
-                                            @error ('nohp_perusahaan')<span class="text-danger">{{ $message }}</span> @enderror
-
-                                        </div>
-
-                                        <div class="mb3">
-                                            <label>Nomor rekening perusahaan</label>
-                                            <input type="text" name="norek_perusahaan" class="form-control"value="{{old('norek_perusahaan')}}"/>
-                                            @error ('norek_perusahaan')<span class="text-danger">{{ $message }}</span> @enderror
-
-                                        </div>
-                                        <div class="mb3">
-                                           <button type="submit" class="btn btn-primary">Save</button>
-                                        </div>
-
-                                     </ffor>
-
-                                </div>
-
+                        <!-- Pilih Karyawan untuk Pembayaran Gaji -->
+                        <div class="mb-3">
+                            <label for="user_ids" class="form-label fw-bold">Pilih Karyawan untuk Pembayaran
+                                Gaji:</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="select_all"> Pilih Semua
                             </div>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nama</th>
+                                        <th>Gaji</th>
+                                        <th>Status</th>
+                                        <th>Pilih</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($user_perusahaan as $daf_user)
+                                        <tr>
+                                            <td>{{ $daf_user->id_user }}</td>
+                                            <td>{{ $daf_user->nama_user }}</td>
+                                            <td>Rp{{ number_format($daf_user->gaji, 2, ',', '.') }}</td>
+                                            <td>{{ $daf_user->status }}</td>
+                                            <td>
+                                                <input type="checkbox" class="user-checkbox" name="user_ids[]"
+                                                    value="{{ $daf_user->id_user }}">
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+
                         </div>
 
+                        <button type="submit" class="btn btn-primary">Set Jadwal Gaji</button>
+                    </form>
 
 
-                    </div>
+
+
 
 
                 </div>
         </div>
+
+
+
+    </div>
+
+
+    </div>
+    </div>
 
     </div>
     </main>
@@ -197,13 +234,80 @@
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
 
-@if($message = Session::get('status'))
     <script>
-        Swal.fire('{{$message}}');
-    </script>
-@endif
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cari semua tombol dengan class 'btn-delete'
+            const deleteButtons = document.querySelectorAll('.btn-delete');
 
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const userId = this.getAttribute('data-id');
+                    const deleteUrl = this.getAttribute('data-url');
+
+                    // SweetAlert2 pop-up
+                    Swal.fire({
+                        title: "Anda yakin?",
+                        text: "Data karyawan ini akan dihapus secara permanen!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Ya, hapus!",
+                        cancelButtonText: "Batal"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect ke URL delete
+                            window.location.href = deleteUrl;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Pilih Semua checkbox
+            const selectAllCheckbox = document.getElementById('select_all');
+            const userCheckboxes = document.querySelectorAll('.user-checkbox');
+
+            // Event listener untuk "Pilih Semua"
+            selectAllCheckbox.addEventListener('change', function () {
+                userCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = selectAllCheckbox.checked; // Centang semua checkbox karyawan sesuai dengan status "Pilih Semua"
+                });
+            });
+
+            // Jika salah satu checkbox karyawan diubah, pastikan "Pilih Semua" diperbarui
+            userCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    if (!this.checked) {
+                        selectAllCheckbox.checked = false; // Jika ada checkbox yang tidak dicentang, hilangkan centang pada "Pilih Semua"
+                    } else {
+                        selectAllCheckbox.checked = Array.from(userCheckboxes).every(function (checkbox) {
+                            return checkbox.checked; // Jika semua checkbox dicentang, centang "Pilih Semua"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    @if($message = Session::get('error'))
+        <script>
+            Swal.fire('{{$message}}');
+        </script>
+    @endif
+
+    @if($message = Session::get('success'))
+        <script>
+            Swal.fire('{{$message}}');
+        </script>
+    @endif
+
+
+
+</body>
 
 </html>
