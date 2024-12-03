@@ -106,4 +106,22 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'user berhasil di dihapus');
 
     }
+
+    public function search(Request $request)
+{
+
+    $search = $request->get('search');
+
+    // Cari data user berdasarkan nama_user atau jabatan atau atribut lainnya
+    $user_perusahaan = UserPerusahaan::query()
+        ->when($search, function ($query, $search) {
+            return $query->where('nama_user', 'like', "%{$search}%")
+                         ->orWhere('jabatan', 'like', "%{$search}%")
+                         ->orWhere('alamat', 'like', "%{$search}%");
+        })
+        ->paginate(10);
+
+    return view('user_perusahaan.userb', compact('user_perusahaan'));
+}
+
 }

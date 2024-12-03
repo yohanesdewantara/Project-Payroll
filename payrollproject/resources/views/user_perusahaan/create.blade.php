@@ -84,7 +84,7 @@
 
 
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Payroll
@@ -96,7 +96,7 @@
                                 <a class="nav-link" href="layout-static.html">Log Payroll</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
                             </nav>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -160,18 +160,30 @@
                                             @enderror
                                         </div>
 
-                                        <div class="mb-3">
+                                        <div class="mb3 position-relative">
                                             <label>Jabatan</label>
-                                            <input type="text" name="jabatan"
-                                                class="form-control @error('jabatan') is-invalid @enderror"
-                                                value="{{ old('jabatan') }}" />
-                                            @error('jabatan')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                            <div class="input-group">
+                                            <select name="jabatan" id="jabatan"
+                                                class="form-control @error('jabatan') is-invalid @enderror" required>
+                                                <option value="">-- Pilih Jabatan --</option>
+                                                <option value="HR Manager" {{ old('jabatan') == 'HR Manager' ? 'selected' : '' }}>HR Manager
+                                                </option>
+                                                <option value="IT Specialist" {{ old('jabatan') == 'IT Specialist' ? 'selected' : '' }}>IT Specialist</option>
+                                                <option value="Marketing " {{ old('jabatan') == 'Marketing ' ? 'selected' : '' }}>Marketing
+                                                </option>
+                                                <option value="Customer Service" {{ old('jabatan') == 'Customer Service' ? 'selected' : '' }}>Customer Service
+                                                </option>
+                                                <option value="Project Manager" {{ old('jabatan') == 'Project Manager' ? 'selected' : '' }}>Project Manager</option>
+                                            </select>
+                                            <span class="input-group-text">
+                                                    <i class="fas fa-caret-down"></i>
+                                                </span>
+                                                </div>
                                         </div>
 
-                                        <div class="mb-3">
+                                        <div class="mb3 position-relative">
                                             <label>Bank</label>
+                                            <div class="input-group">
                                             <select name="alamat" id="alamat"
                                                 class="form-control @error('alamat') is-invalid @enderror" required>
                                                 <option value="">-- Pilih Bank --</option>
@@ -184,6 +196,10 @@
                                                 </option>
                                                 <option value="CIMB Niaga" {{ old('alamat') == 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga</option>
                                             </select>
+                                            <span class="input-group-text">
+                                                    <i class="fas fa-caret-down"></i>
+                                                </span>
+                                            </div>
                                             @error('alamat')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Nov 2024 pada 20.03
+-- Waktu pembuatan: 03 Des 2024 pada 11.12
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.1.25
 
@@ -101,6 +101,21 @@ CREATE TABLE `jadwal_gaji` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `jadwal_gaji2`
+--
+
+CREATE TABLE `jadwal_gaji2` (
+  `id_jadwal` int(11) NOT NULL,
+  `id_perusahaan` int(11) DEFAULT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `tgl_gaji` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `log_payroll`
 --
 
@@ -114,6 +129,13 @@ CREATE TABLE `log_payroll` (
   `id_superadmin` int(11) DEFAULT NULL,
   `id_adminpayroll` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `log_payroll`
+--
+
+INSERT INTO `log_payroll` (`id_log`, `id_user`, `id_perusahaan`, `amount`, `status`, `transfer_date`, `id_superadmin`, `id_adminpayroll`) VALUES
+(34, 50, 6, 110000000.00, 'SUCCESS', '2024-12-03 01:43:42', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -135,7 +157,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_reset_tokens_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(5, '2024_11_30_155655_add_jadwal_gaji_to_user_perusahaan', 2);
 
 -- --------------------------------------------------------
 
@@ -180,6 +203,7 @@ CREATE TABLE `perusahaan` (
   `alamat` varchar(125) DEFAULT NULL,
   `nohp_perusahaan` varchar(20) DEFAULT NULL,
   `norek_perusahaan` varchar(50) DEFAULT NULL,
+  `saldo` decimal(15,2) NOT NULL DEFAULT 0.00,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_admin` int(11) DEFAULT NULL,
@@ -191,9 +215,8 @@ CREATE TABLE `perusahaan` (
 -- Dumping data untuk tabel `perusahaan`
 --
 
-INSERT INTO `perusahaan` (`id_perusahaan`, `nama_perusahaan`, `alamat`, `nohp_perusahaan`, `norek_perusahaan`, `created_at`, `updated_at`, `id_admin`, `id_superadmin`, `id_adminpayroll`) VALUES
-(2, 'UKDW Yogya', 'Gondokusuman yogyakarta', '08098908', '267136721', '2024-11-16 09:23:22', '2024-11-18 19:32:16', NULL, NULL, NULL),
-(3, 'Atma Jayaa', 'gondokusuman', '090909', '88988998', '2024-11-20 03:22:50', '2024-11-20 03:22:59', NULL, NULL, NULL);
+INSERT INTO `perusahaan` (`id_perusahaan`, `nama_perusahaan`, `alamat`, `nohp_perusahaan`, `norek_perusahaan`, `saldo`, `created_at`, `updated_at`, `id_admin`, `id_superadmin`, `id_adminpayroll`) VALUES
+(6, 'Pablo Company', 'jogja', '08310802803', '081321', 890000000.00, '2024-11-29 08:10:16', '2024-12-02 18:43:42', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -251,24 +274,22 @@ CREATE TABLE `user_perusahaan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_admin` int(11) DEFAULT NULL,
   `id_superadmin` int(11) DEFAULT NULL,
-  `id_adminpayroll` int(11) DEFAULT NULL
+  `id_adminpayroll` int(11) DEFAULT NULL,
+  `status` enum('ACTIVE','INACTIVE','PENDING','PAID') DEFAULT 'ACTIVE',
+  `jadwal_gaji_tanggal` date DEFAULT NULL,
+  `jadwal_gaji_jam` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `user_perusahaan`
 --
 
-INSERT INTO `user_perusahaan` (`id_user`, `id_perusahaan`, `nama_user`, `jabatan`, `alamat`, `gaji`, `norek_user`, `created_at`, `updated_at`, `id_admin`, `id_superadmin`, `id_adminpayroll`) VALUES
-(4, NULL, 'Olivia Rodrigo', 'apa kek', 'BNI', 50000000.00, '1234567', '2024-11-16 02:00:26', '2024-11-18 19:31:21', NULL, NULL, NULL),
-(7, NULL, 'Andika Cakrabirawa', 'Front-end', 'BCA', 5000.00, '1234567', '2024-11-16 09:05:34', '2024-11-18 05:41:03', NULL, NULL, NULL),
-(10, NULL, 'Riko', 'BPH', 'BCA', 500000.00, '12345', '2024-11-20 02:08:06', '2024-11-20 02:08:06', NULL, NULL, NULL),
-(11, NULL, 'Albert', 'miba', 'BCA', 1000000.00, '346367', '2024-11-20 02:47:19', '2024-11-20 02:47:19', NULL, NULL, NULL),
-(12, NULL, 'tania', 'anggota bpm', 'BCA', 10000000.00, '67677', '2024-11-20 02:49:31', '2024-11-20 02:51:21', NULL, NULL, NULL),
-(13, NULL, 'aya', 'auditor', 'BNI', 20000000.00, '89989', '2024-11-20 02:53:50', '2024-11-20 02:53:50', NULL, NULL, NULL),
-(14, NULL, 'Grace', 'ketua bem fk', 'BCA', 70000000.00, '2874984', '2024-11-20 02:56:14', '2024-11-20 02:56:14', NULL, NULL, NULL),
-(15, NULL, 'Yohanes', 'kdnkas', 'BCA', 80000000.00, '8048324', '2024-11-20 02:58:37', '2024-11-20 02:58:37', NULL, NULL, NULL),
-(19, NULL, 'Angel', 'BPH', 'BCA', 900000000.00, '676767', '2024-11-20 04:38:18', '2024-11-20 04:38:18', NULL, NULL, NULL),
-(20, NULL, 'rikoars', 'hsdbhas', 'BCA', 700.00, '88787', '2024-11-20 06:18:11', '2024-11-20 06:18:11', NULL, NULL, NULL);
+INSERT INTO `user_perusahaan` (`id_user`, `id_perusahaan`, `nama_user`, `jabatan`, `alamat`, `gaji`, `norek_user`, `created_at`, `updated_at`, `id_admin`, `id_superadmin`, `id_adminpayroll`, `status`, `jadwal_gaji_tanggal`, `jadwal_gaji_jam`) VALUES
+(46, NULL, 'Yohanes Dewantara', 'Project Manager', 'BCA', 100000000.00, '72220531', '2024-12-02 08:33:02', '2024-12-02 08:33:02', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(47, NULL, 'Andika Pratamax', 'Marketing', 'BCA', 100000000.00, '72220599', '2024-12-02 08:55:15', '2024-12-02 09:12:29', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(48, NULL, 'Lidya', 'HR Manager', 'BNI', 100000000.00, '72220552', '2024-12-02 09:05:59', '2024-12-02 09:05:59', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(49, NULL, 'Putri', 'Customer Service', 'BNI', 100000000.00, '72220592', '2024-12-02 09:06:58', '2024-12-02 09:12:43', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(50, NULL, 'Joe Pablo', 'IT Specialist', 'BRI', 110000000.00, '7222053113', '2024-12-02 09:13:30', '2024-12-02 18:43:42', NULL, NULL, NULL, 'PAID', '2024-12-03', '09:43:00');
 
 --
 -- Indexes for dumped tables
@@ -304,6 +325,13 @@ ALTER TABLE `jadwal_gaji`
   ADD KEY `fk_jadwal_gaji_admin` (`id_admin`),
   ADD KEY `fk_jadwal_gaji_superadmin` (`id_superadmin`),
   ADD KEY `fk_jadwal_gaji_adminpayroll` (`id_adminpayroll`);
+
+--
+-- Indeks untuk tabel `jadwal_gaji2`
+--
+ALTER TABLE `jadwal_gaji2`
+  ADD PRIMARY KEY (`id_jadwal`),
+  ADD KEY `id_perusahaan` (`id_perusahaan`);
 
 --
 -- Indeks untuk tabel `log_payroll`
@@ -385,16 +413,22 @@ ALTER TABLE `jadwal_gaji`
   MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `jadwal_gaji2`
+--
+ALTER TABLE `jadwal_gaji2`
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `log_payroll`
 --
 ALTER TABLE `log_payroll`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -406,7 +440,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT untuk tabel `perusahaan`
 --
 ALTER TABLE `perusahaan`
-  MODIFY `id_perusahaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_perusahaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
@@ -418,7 +452,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `user_perusahaan`
 --
 ALTER TABLE `user_perusahaan`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -432,6 +466,12 @@ ALTER TABLE `jadwal_gaji`
   ADD CONSTRAINT `fk_jadwal_gaji_adminpayroll` FOREIGN KEY (`id_adminpayroll`) REFERENCES `admin_payroll` (`id_adminpayroll`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_jadwal_gaji_superadmin` FOREIGN KEY (`id_superadmin`) REFERENCES `super_admin` (`id_superadmin`) ON DELETE CASCADE,
   ADD CONSTRAINT `jadwal_gaji_ibfk_1` FOREIGN KEY (`id_perusahaan`) REFERENCES `perusahaan` (`id_perusahaan`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `jadwal_gaji2`
+--
+ALTER TABLE `jadwal_gaji2`
+  ADD CONSTRAINT `jadwal_gaji2_ibfk_1` FOREIGN KEY (`id_perusahaan`) REFERENCES `perusahaan` (`id_perusahaan`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `log_payroll`

@@ -72,6 +72,10 @@ Route::put('/user_perusahaan/{id_user}/update', [UserController::class, 'update'
 Route::get('user_perusahaan/{id_user}/delete', [UserController::class, 'destroy']); //ini buat hapus data user
 
 
+Route::get('/user_perusahaan/search', [UserController::class, 'search'])->name('user_perusahaan.search');
+
+
+
 
 Route::get('/perusahaan', [App\Http\Controllers\PerusahaanController::class, 'perusahaan']);
 Route::get('/perusahaan/createp', [App\Http\Controllers\PerusahaanController::class, 'createp']);

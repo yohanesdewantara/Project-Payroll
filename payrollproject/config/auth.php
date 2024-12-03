@@ -43,7 +43,7 @@ return [
     ],
     'admin' => [
         'driver' => 'session',
-        'provider' => 'admin',  // Pastikan ini mengarah ke provider 'admin'
+        'provider' => 'admin',
     ],
     'super_admin' => [
         'driver' => 'session',
@@ -80,7 +80,7 @@ return [
     ],
     'admin' => [
         'driver' => 'eloquent',
-        'model' => App\Models\Admin::class,  // Menggunakan model Admin untuk autentikasi
+        'model' => App\Models\Admin::class,
     ],
     'super_admin' => [
         'driver' => 'eloquent',

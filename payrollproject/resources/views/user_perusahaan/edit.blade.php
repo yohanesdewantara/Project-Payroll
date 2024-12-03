@@ -72,7 +72,7 @@
 
 
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Payroll
@@ -84,7 +84,7 @@
                                 <a class="nav-link" href="layout-static.html">Log Payroll</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
                             </nav>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -156,29 +156,55 @@
                                             <label>id_user</label>
                                             <input type="text" name="id_user" val classue="{{old('id_user')}}"/>
                                         </div> -->
-                                        <div class="mb3">
-                                            <label>Jabatan</label>
-                                            <input type="text" name="jabatan" class="form-control"
-                                                value="{{$user_perusahaan->jabatan}}" />
+                                        <div class="mb3 position-relative">
+    <label for="jabatan">Jabatan</label>
+    <div class="input-group">
+        <select name="jabatan" id="jabatan"
+            class="form-control @error('jabatan') is-invalid @enderror" required>
+            <option value="">-- Pilih Jabatan --</option>
+            <option value="HR Manager" {{ old('jabatan', $user_perusahaan->jabatan) == 'HR Manager' ? 'selected' : '' }}>
+                HR Manager
+            </option>
+            <option value="IT Specialist" {{ old('jabatan', $user_perusahaan->jabatan) == 'IT Specialist' ? 'selected' : '' }}>
+                IT Specialist
+            </option>
+            <option value="Marketing" {{ old('jabatan', $user_perusahaan->jabatan) == 'Marketing' ? 'selected' : '' }}>
+                Marketing
+            </option>
+            <option value="Customer Service" {{ old('jabatan', $user_perusahaan->jabatan) == 'Customer Service' ? 'selected' : '' }}>
+                Customer Service
+            </option>
+            <option value="Project Manager" {{ old('jabatan', $user_perusahaan->jabatan) == 'Project Manager' ? 'selected' : '' }}>
+                Project Manager
+            </option>
+        </select>
+        <span class="input-group-text">
+            <i class="fas fa-caret-down"></i>
+        </span>
+    </div>
+    @error('jabatan') <span class="text-danger">{{ $message }}</span> @enderror
+</div>
 
-                                            @error ('jabatan')<span class="text-danger">{{ $message }}</span> @enderror
 
+
+                                        <div class="mb3 position-relative">
+                                            <label for="alamat">Bank</label>
+                                            <div class="input-group">
+                                                <select name="alamat" id="alamat" class="form-control" required>
+                                                    <option value="">-- Pilih Bank --</option>
+                                                    <option value="BCA" {{ $user_perusahaan->alamat == 'BCA' ? 'selected' : '' }}>BCA</option>
+                                                    <option value="Mandiri" {{ $user_perusahaan->alamat == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                                    <option value="BNI" {{ $user_perusahaan->alamat == 'BNI' ? 'selected' : '' }}>BNI</option>
+                                                    <option value="BRI" {{ $user_perusahaan->alamat == 'BRI' ? 'selected' : '' }}>BRI</option>
+                                                    <option value="CIMB Niaga" {{ $user_perusahaan->alamat == 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga</option>
+                                                </select>
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                            @error('alamat')<span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
-                                        <div class="mb3">
-                                            <label>Bank</label>
-                                            <!-- <input type="text" name="alamat" class="form-control"
-                                                value="{{$user_perusahaan->alamat}}" /> -->
-                                            <select name="alamat" id="alamat" class="form-control" required>
-                                                <option value="">-- Pilih Bank --</option>
-                                                <option value="BCA">BCA</option>
-                                                <option value="Mandiri">Mandiri</option>
-                                                <option value="BNI">BNI</option>
-                                                <option value="BRI">BRI</option>
-                                                <option value="CIMB Niaga">CIMB Niaga</option>
-                                            </select>
-                                            @error ('alamat')<span class="text-danger">{{ $message }}</span> @enderror
 
-                                        </div>
                                         <div class="mb3">
                                             <label>Gaji</label>
                                             <input type="text" name="gaji" class="form-control"

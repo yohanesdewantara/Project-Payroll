@@ -21,10 +21,7 @@
 
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button> -->
+
             </div>
         </form>
 
@@ -72,7 +69,7 @@
 
 
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Payroll
@@ -84,7 +81,7 @@
                                 <a class="nav-link" href="layout-static.html">Log Payroll</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
                             </nav>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -98,18 +95,57 @@
             <main>
 
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Karyawan</h1>
+                    <h1 class="mt-4">Daftar Karyawan</h1>
+
+
+
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Daftar Karyawan
+                                    <h4>
+                                        <!-- <div> <form action="{{ route('user_perusahaan.search') }}" method="GET">
+                                            <div class="input-group mb-3" style="width: 300px">
+                                                <input type="text" class="form-control" placeholder="Cari Karyawan"
+                                                    name="search" value="{{ request('search') }}">
+                                                <button class="btn btn-primary" type="submit">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                                </div>
 
-                                        <a href="{{url('user_perusahaan/create')}}"
-                                            class="btn btn-primary float-end">Tambah Karyawan</a>
+
+                                            <div><a href="{{url('user_perusahaan/create')}}"
+                                            class="btn btn-primary float-end">Tambah Karyawan</a></div>
+
+
+                                        </form>
+                                        </div> -->
+                                        <form action="{{ route('user_perusahaan.search') }}" method="GET">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <!-- Field pencarian -->
+                                                <div class="input-group" style="width: 300px;">
+                                                    <input type="text" class="form-control" placeholder="Cari Karyawan"
+                                                        name="search" value="{{ request('search') }}">
+                                                    <button class="btn btn-primary" type="submit">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                </div>
+
+                                                <!-- Tombol tambah karyawan -->
+                                                <div class="col-md-9 text-end">
+                                                <a href="{{ url('user_perusahaan/create') }}"
+                                                    class="btn btn-primary ms-3">Tambah Karyawan</a>
+                                            </div>
+                                        </form>
+
+
+
                                     </h4>
                                 </div>
+
+
+
                                 <div class="card-body">
                                     <!-- isi konten -->
                                     <!-- {{$user_perusahaan}} -->
@@ -137,12 +173,38 @@
                                                     <td>{{$daf_user->norek_user}}</td>
 
                                                     <td>
+
+                                                        <!-- <a href="{{url('user_perusahaan/' . $daf_user->id_user . '/edit')}}"
+                                                                                    class="btn btn-success mx-2">Ubah</a> -->
                                                         <a href="{{url('user_perusahaan/' . $daf_user->id_user . '/edit')}}"
-                                                            class="btn btn-success mx-2">Ubah</a>
+                                                            class="btn btn-success mx-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                                fill="currentColor" class="bi bi-pencil-square"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                <path fill-rule="evenodd"
+                                                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                            </svg>
+
+                                                        </a>
+
+                                                        <!-- <a class="btn btn-danger mx-1 btn-delete"
+                                                                                data-id="{{ $daf_user->id_user }}"
+                                                                                data-url="{{ url('user_perusahaan/' . $daf_user->id_user . '/delete') }}">
+                                                                                Hapus</a> -->
                                                         <a class="btn btn-danger mx-1 btn-delete"
                                                             data-id="{{ $daf_user->id_user }}"
                                                             data-url="{{ url('user_perusahaan/' . $daf_user->id_user . '/delete') }}">
-                                                            Hapus</a>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                                fill="currentColor" class="bi bi-trash3"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                                            </svg>
+
+                                                        </a>
+
 
                                                     </td>
                                                 </tr>
@@ -194,35 +256,35 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Cari semua tombol dengan class 'btn-delete'
-        const deleteButtons = document.querySelectorAll('.btn-delete');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cari semua tombol dengan class 'btn-delete'
+            const deleteButtons = document.querySelectorAll('.btn-delete');
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const userId = this.getAttribute('data-id');
-                const deleteUrl = this.getAttribute('data-url');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const userId = this.getAttribute('data-id');
+                    const deleteUrl = this.getAttribute('data-url');
 
-                // SweetAlert2 pop-up
-                Swal.fire({
-                    title: "Anda yakin?",
-                    text: "Data karyawan ini akan dihapus secara permanen!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#d33",
-                    cancelButtonColor: "#3085d6",
-                    confirmButtonText: "Ya, hapus!",
-                    cancelButtonText: "Batal"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect ke URL delete
-                        window.location.href = deleteUrl;
-                    }
+                    // SweetAlert2 pop-up
+                    Swal.fire({
+                        title: "Anda yakin?",
+                        text: "Data karyawan ini akan dihapus secara permanen!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Ya, hapus!",
+                        cancelButtonText: "Batal"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect ke URL delete
+                            window.location.href = deleteUrl;
+                        }
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 
 
 </body>
