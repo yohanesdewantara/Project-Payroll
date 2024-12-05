@@ -11,6 +11,7 @@ use App\Models\UserPerusahaan;
 use App\Models\LogPayroll;
 use Illuminate\Http\Request;
 use App\Models\JadwalGaji; // Tambahkan ini di controller
+use Carbon\Carbon;
 
 
 class PayrollController extends Controller
@@ -87,6 +88,44 @@ class PayrollController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->route('jadwal_gaji.tambahjadwal')->with('success', 'Jadwal Gaji berhasil diset.');
     }
+
+    public function logPayroll(Request $request)
+    {
+        $banks = UserPerusahaan::pluck('alamat')->unique();
+        $perusahaan = Perusahaan::find(6); // Ambil data perusahaan dengan ID 6
+
+        // Ambil bulan dari request
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+
+        $user_perusahaan = UserPerusahaan::query();
+
+        // Tambahkan filter bank jika ada
+
+
+        // Tambahkan filter bulan jika ada
+        if ($bulan) {
+            $user_perusahaan->whereMonth('jadwal_gaji_tanggal', '=', $bulan);
+        }
+
+        if ($tahun) {
+            $user_perusahaan->whereYear('jadwal_gaji_tanggal', '=', $tahun);
+        }
+
+        // Urutkan berdasarkan status
+        $user_perusahaan->orderByRaw("CASE
+            WHEN status = 'active' THEN 1
+            WHEN status = 'paid' THEN 2
+            ELSE 3
+        END");
+
+        // Ambil data
+        $user_perusahaan = $user_perusahaan->get();
+
+        // Kirim data ke view
+        return view('jadwal_gaji.log_payroll', compact('user_perusahaan', 'banks', 'perusahaan', 'bulan', 'tahun'));
+    }
+
 
 
 }

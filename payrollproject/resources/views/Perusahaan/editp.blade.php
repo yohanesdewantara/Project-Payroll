@@ -29,6 +29,9 @@
         </form>
 
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item align-self-center">
+                <span class="text-white small"> {{ session('role', 'Guest') }}</span>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -57,7 +60,7 @@
 
                         <a class="nav-link" href="{{ route('home') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            User Perusahaan
+                            Karyawan
                         </a>
 
                         <a class="nav-link" href="/home">
@@ -69,6 +72,17 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                             Jadwal & Penggajian
                         </a>
+                        <li class="nav-item">
+                                @if(session('role') !== 'Admin')
+                                    <a class="nav-link" href="/log_payroll">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        Log Payroll
+                                    </a>
+                                    @endif
+                                </li>
+
 
 
                         <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -84,10 +98,7 @@
                         </div> -->
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
 
-                </div>
             </nav>
         </div>
 
@@ -100,7 +111,7 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                        @if(session('status'))
+                            @if(session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <strong>Sukses!</strong> User berhasil diupdate
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
@@ -110,9 +121,8 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Edit User
-                                        <a href="{{ url('/perusahaan') }}"
-                                            class="btn btn-primary float-end">Kembali</a>
+                                    <h4>Edit Perusahaan
+                                        <a href="{{ url('/perusahaan') }}" class="btn btn-primary float-end">Kembali</a>
 
                                     </h4>
                                 </div>
@@ -151,7 +161,8 @@
                                             <input type="text" name="nohp_perusahaan" class="form-control"
                                                 value="{{$perusahaan->nohp_perusahaan}}" />
 
-                                            @error ('nohp_perusahaan')<span class="text-danger">{{ $message }}</span> @enderror
+                                            @error ('nohp_perusahaan')<span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
 
@@ -175,7 +186,7 @@
                                         </div>
 
 
-                                        <div class="mb3">
+                                        <div class="mb3 mt-4">
                                             <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
 

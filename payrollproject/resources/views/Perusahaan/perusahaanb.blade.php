@@ -29,6 +29,9 @@
         </form>
 
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item align-self-center">
+                <span class="text-white small"> {{ session('role', 'Guest') }}</span>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -57,7 +60,7 @@
 
                         <a class="nav-link" href="/user_perusahaan">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            User Perusahaan
+                            Karyawan
                         </a>
 
                         <a class="nav-link" href="/perusahaan">
@@ -69,6 +72,17 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                             Jadwal & Penggajian
                         </a>
+                        <li class="nav-item">
+                                @if(session('role') !== 'Admin')
+                                    <a class="nav-link" href="/log_payroll">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        Log Payroll
+                                    </a>
+                                    @endif
+                                </li>
+
 
 
 
@@ -87,10 +101,7 @@
                         </div> -->
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
 
-                </div>
             </nav>
         </div>
 
@@ -136,7 +147,7 @@
                                                     <td>Rp{{ number_format($daf_perusahaan->saldo, 2, ',', '.') }}</td>
                                                     <td>
                                                         <!-- <a href="{{url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/edit')}}"
-                                                                class="btn btn-success mx-2">Ubah</a> -->
+                                                                    class="btn btn-success mx-2">Ubah</a> -->
                                                         <a href="{{url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/edit')}}"
                                                             class="btn btn-success mx-2">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -151,9 +162,9 @@
                                                         </a>
 
                                                         <!-- <a class="btn btn-danger mx-1 btn-delete"
-                                                                    data-id="{{ $daf_perusahaan->id_perusahaan }}"
-                                                                    data-url="{{ url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/delete') }}">
-                                                                    Hapus</a> -->
+                                                                        data-id="{{ $daf_perusahaan->id_perusahaan }}"
+                                                                        data-url="{{ url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/delete') }}">
+                                                                        Hapus</a> -->
                                                         <a class="btn btn-danger mx-1 btn-delete"
                                                             data-id="{{ $daf_perusahaan->id_perusahaan }}"
                                                             data-url="{{ url('perusahaan/' . $daf_perusahaan->id_perusahaan . '/delete') }}">

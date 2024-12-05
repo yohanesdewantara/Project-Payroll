@@ -97,6 +97,8 @@
                                     @endif
                                 </li>
 
+
+
                     </div>
                 </div>
 
@@ -107,7 +109,7 @@
             <main>
 
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Penggajian</h1>
+                    <h1 class="mt-4">Logbook Payroll</h1>
                     @if (session('error'))
                         <div class="alert alert-danger">
                             {{ session('error') }}
@@ -131,23 +133,21 @@
 
                     <form action="{{ route('jadwal_gaji') }}" method="GET">
                         <div class="row mb-3">
-                            <div class="col-md-12 d-flex align-items-center">
-                                <label for="bank" class="form-label fw-bold">Pilih Bank :</label>
-                                <div class="dropdown ms-3">
-                                    <select name="bank" id="bank" class="form-select" onchange="this.form.submit()"
-                                        aria-label="Pilih Bank">
-                                        <option value="">-- Semua Bank --</option>
-                                        @foreach ($banks as $bank)
-                                            <option value="{{ $bank }}" {{ request('bank') == $bank ? 'selected' : '' }}>
-                                                {{ $bank }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+
                         </div>
 
                     </form>
+                    <!-- <div class="col-md-4">
+                        <label for="bulan" class="form-label fw-bold">Filter Berdasarkan Bulan:</label>
+                        <select name="bulan" id="bulan" class="form-select">
+                            <option value="">-- Pilih Bulan --</option>
+                            @foreach(range(1, 12) as $m)
+                                <option value="{{ $m }}" {{ (request()->get('bulan') == $m) ? 'selected' : '' }}>
+                                    {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div> -->
 
 
 
@@ -167,17 +167,19 @@
                         </div>
                     </div>
 
+
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4>Daftar Karyawan
 
-                                        <a href="{{url('jadwal_gaji/tambahjadwal')}}"
-                                            class="btn btn-primary float-end">Tambah Jadwal</a>
 
-                                        <!-- <a href="{{ route('jadwal_gaji.downloadPdf') }}"
+
+                                        <a href="{{ route('jadwal_gaji.downloadPdf', ['bulan' => request()->get('bulan'), 'tahun' => request()->get('tahun')]) }}"
                                             class="btn btn-success float-end" style="margin-right: 10px;">
+
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-box-arrow-down" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd"
@@ -186,7 +188,7 @@
                                                     d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708z" />
                                             </svg>
                                             Cetak PDF
-                                        </a> -->
+                                        </a>
 
 
 
@@ -195,85 +197,103 @@
 
                                 </div>
 
-                                <form action="{{ route('processPayroll') }}" method="POST">
-
-                                    <input type="hidden" name="perusahaan_id" value="{{ $perusahaan->id_perusahaan }}">
-
-                                    @csrf
+                                <form action="{{ url('/log_payroll') }}" method="GET">
                                     <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label for="user_ids" class="form-label fw-bold">Pilih Karyawan untuk
-                                                Pembayaran Gaji:</label>
-                                            <!-- <div class="form-check float-end"  style="margin-right: 10px;">
-                                                <input type="checkbox" class="form-check-input" id="select_all"> Pilih
-                                                Semua
-                                            </div> -->
-                                            <table class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Nama</th>
-                                                        <th>Bank</th>
-                                                        <th>Gaji</th>
-                                                        <th>Nomor Rekening</th>
-                                                        <th>Status</th>
-                                                        <th>Jadwal</th>
-                                                        <th><input type="checkbox" class="form-check-input"
-                                                                id="select_all"> Pilih Semua</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    @foreach ($user_perusahaan as $daf_user)
-                                                        <tr>
-                                                            <td>{{ $daf_user->id_user }}</td>
-                                                            <td>{{ $daf_user->nama_user }}</td>
-                                                            <td>{{ $daf_user->alamat }}</td>
-                                                            <td>Rp{{ number_format($daf_user->gaji, 2, ',', '.') }}</td>
-                                                            <td>{{ $daf_user->norek_user }}</td>
-                                                            <td>{{ $daf_user->status }}</td>
-                                                            <td>
-                                                                @if($daf_user->jadwal_gaji_tanggal)
-                                                                    {{ \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->isValid() ? \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->format('d-m-Y') : 'Tanggal tidak valid' }}
-                                                                    at {{ $daf_user->jadwal_gaji_jam ?? '---' }}
-                                                                @else
-                                                                    'Belum Dijadwalkan'
-                                                                @endif
-                                                            </td>
-
-                                                            <td>
-                                                                <input type="checkbox" class="user-checkbox"
-                                                                    name="user_ids[]" value="{{ $daf_user->id_user }}">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div class="col-md-4">
+                                            <label for="bulan" class="form-label fw-bold">Filter Berdasarkan
+                                                Bulan:</label>
+                                            <select name="bulan" id="bulan" class="form-select">
+                                                <option value="">-- Pilih Bulan --</option>
+                                                @foreach(range(1, 12) as $m)
+                                                    <option value="{{ $m }}" {{ request()->get('bulan') == $m ? 'selected' : '' }}>
+                                                        {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="tahun" class="form-label fw-bold">Filter Berdasarkan
+                                                Tahun:</label>
+                                            <select name="tahun" id="tahun" class="form-select">
+                                                <option value="">-- Pilih Tahun --</option>
+                                                @foreach(range(2020, now()->year) as $year) <!-- Anda bisa mengatur rentang tahun sesuai kebutuhan -->
+                                                    <option value="{{ $year }}" {{ request()->get('tahun') == $year ? 'selected' : '' }}>
+                                                        {{ $year }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 align-self-end">
+                                            <button type="submit" class="btn btn-primary">Filter</button>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Proses Penggajian</button>
                                 </form>
+
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4>Daftar Karyawan</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <!-- Tabel Karyawan atau hasil filter -->
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Nama</th>
+                                                            <th>Bank</th>
+                                                            <th>Gaji</th>
+                                                            <th>Nomor Rekening</th>
+                                                            <th>Status</th>
+                                                            <th>Jadwal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($user_perusahaan as $daf_user)
+                                                            <tr>
+                                                                <td>{{ $daf_user->id_user }}</td>
+                                                                <td>{{ $daf_user->nama_user }}</td>
+                                                                <td>{{ $daf_user->alamat }}</td>
+                                                                <td>Rp{{ number_format($daf_user->gaji, 2, ',', '.') }}</td>
+                                                                <td>{{ $daf_user->norek_user }}</td>
+                                                                <td>{{ $daf_user->status }}</td>
+                                                                <td>
+                                                                    @if($daf_user->jadwal_gaji_tanggal)
+                                                                        {{ \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->isValid() ? \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->format('d-m-Y') : 'Tanggal tidak valid' }}
+                                                                        at {{ $daf_user->jadwal_gaji_jam ?? '---' }}
+                                                                    @else
+                                                                        'Belum Dijadwalkan'
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+            </main>
+
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Payroll BCA</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms & Conditions</a>
                         </div>
                     </div>
                 </div>
+            </footer>
         </div>
-
-    </div>
-    </main>
-    <footer class="py-4 bg-light mt-auto">
-        <div class="container-fluid px-4">
-            <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted">Copyright &copy; Payroll BCA</div>
-                <div>
-                    <a href="#">Privacy Policy</a>
-                    &middot;
-                    <a href="#">Terms & Conditions</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

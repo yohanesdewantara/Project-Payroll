@@ -29,6 +29,9 @@
         </form>
 
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item align-self-center">
+                <span class="text-white small"> {{ session('role', 'Guest') }}</span>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -69,28 +72,26 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                             Jadwal & Penggajian
                         </a>
+                        <li class="nav-item">
+                                @if(session('role') !== 'Admin')
+                                    <a class="nav-link" href="/log_payroll">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        Log Payroll
+                                    </a>
+                                    @endif
+                                </li>
 
 
 
-                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Payroll
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Log Payroll</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
-                            </nav>
-                        </div> -->
+
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
+                <!-- <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
 
-                </div>
+                </div> -->
             </nav>
         </div>
 
@@ -114,14 +115,11 @@
 
                         <div class="col-md-12">
 
-                            <!-- @if (session('status'))
-                                <div class="alert alert-succes">{{session('status')}}</div>
 
-                            @endif -->
 
                             @if(session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Sukses!</strong> User berhasil dibuat
+                                    <strong>Sukses!</strong> Karyawan berhasil dibuat
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                         aria-label="Close"></button>
                                 </div>
@@ -157,33 +155,34 @@
                                             <input type="text" name="id_user" val classue="{{old('id_user')}}"/>
                                         </div> -->
                                         <div class="mb3 position-relative">
-    <label for="jabatan">Jabatan</label>
-    <div class="input-group">
-        <select name="jabatan" id="jabatan"
-            class="form-control @error('jabatan') is-invalid @enderror" required>
-            <option value="">-- Pilih Jabatan --</option>
-            <option value="HR Manager" {{ old('jabatan', $user_perusahaan->jabatan) == 'HR Manager' ? 'selected' : '' }}>
-                HR Manager
-            </option>
-            <option value="IT Specialist" {{ old('jabatan', $user_perusahaan->jabatan) == 'IT Specialist' ? 'selected' : '' }}>
-                IT Specialist
-            </option>
-            <option value="Marketing" {{ old('jabatan', $user_perusahaan->jabatan) == 'Marketing' ? 'selected' : '' }}>
-                Marketing
-            </option>
-            <option value="Customer Service" {{ old('jabatan', $user_perusahaan->jabatan) == 'Customer Service' ? 'selected' : '' }}>
-                Customer Service
-            </option>
-            <option value="Project Manager" {{ old('jabatan', $user_perusahaan->jabatan) == 'Project Manager' ? 'selected' : '' }}>
-                Project Manager
-            </option>
-        </select>
-        <span class="input-group-text">
-            <i class="fas fa-caret-down"></i>
-        </span>
-    </div>
-    @error('jabatan') <span class="text-danger">{{ $message }}</span> @enderror
-</div>
+                                            <label for="jabatan">Jabatan</label>
+                                            <div class="input-group">
+                                                <select name="jabatan" id="jabatan"
+                                                    class="form-control @error('jabatan') is-invalid @enderror"
+                                                    required>
+                                                    <option value="">-- Pilih Jabatan --</option>
+                                                    <option value="HR Manager" {{ old('jabatan', $user_perusahaan->jabatan) == 'HR Manager' ? 'selected' : '' }}>
+                                                        HR Manager
+                                                    </option>
+                                                    <option value="IT Specialist" {{ old('jabatan', $user_perusahaan->jabatan) == 'IT Specialist' ? 'selected' : '' }}>
+                                                        IT Specialist
+                                                    </option>
+                                                    <option value="Marketing" {{ old('jabatan', $user_perusahaan->jabatan) == 'Marketing' ? 'selected' : '' }}>
+                                                        Marketing
+                                                    </option>
+                                                    <option value="Customer Service" {{ old('jabatan', $user_perusahaan->jabatan) == 'Customer Service' ? 'selected' : '' }}>
+                                                        Customer Service
+                                                    </option>
+                                                    <option value="Project Manager" {{ old('jabatan', $user_perusahaan->jabatan) == 'Project Manager' ? 'selected' : '' }}>
+                                                        Project Manager
+                                                    </option>
+                                                </select>
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-caret-down"></i>
+                                                </span>
+                                            </div>
+                                            @error('jabatan') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
 
 
 
@@ -220,7 +219,7 @@
                                             @enderror
 
                                         </div>
-                                        <div class="mb3">
+                                        <div class="mb3 mt-4">
                                             <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
 

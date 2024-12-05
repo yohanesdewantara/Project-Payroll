@@ -24,6 +24,13 @@ use App\Http\Controllers\PayrollController;
 |
 */
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/gaji-tertinggi', [UserController::class, 'gajiTertinggi'])->name('gaji.tertinggi');
+Route::get('/gaji-tertinggi', [HomeController::class, 'gajiTertinggi'])->name('gajiTertinggi');
+
+
+
+
+
 
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -33,6 +40,9 @@ Route::get('/jadwal_gaji', [JadwalGajiController::class, 'jadwal_gaji']);
 // Route::get('/jadwal-gaji', [JadwalGajiController::class, 'showJadwalGaji']);
 Route::get('/jadwal_gaji', [JadwalGajiController::class, 'jadwal_gaji'])->name('jadwal_gaji');
 Route::post('/process-payroll', [PayrollController::class, 'processPayroll'])->name('processPayroll');
+Route::get('/log_payroll', [PayrollController::class, 'logPayroll'])->name('logPayroll');
+
+
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -89,6 +99,8 @@ Route::get('perusahaan/{id_perusahaan}/delete', [PerusahaanController::class, 'd
 
 Route::get('/jadwal_gaji/tambahjadwal', [App\Http\Controllers\JadwalGajiController::class, 'tambahjadwal']);
 Route::post('/jadwal_gaji/set', [PayrollController::class, 'setJadwalGaji'])->name('setJadwalGaji');
+Route::get('/jadwal_gaji/cetak-pdf', [JadwalGajiController::class, 'cetakPDF'])->name('jadwal_gaji.cetakPDF');
+Route::get('/jadwal_gaji/download-pdf', [JadwalGajiController::class, 'downloadPdf'])->name('jadwal_gaji.downloadPdf');
 
 
 Route::get('/jadwal-gaji/tambah', [JadwalGajiController::class, 'tambahjadwal'])->name('jadwal_gaji.tambahjadwal');

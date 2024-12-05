@@ -47,6 +47,9 @@
         </form>
 
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item align-self-center">
+                <span class="text-white small"> {{ session('role', 'Guest') }}</span>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -87,28 +90,23 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                             Jadwal & Penggajian
                         </a>
+                        <li class="nav-item">
+                                @if(session('role') !== 'Admin')
+                                    <a class="nav-link" href="/log_payroll">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        Log Payroll
+                                    </a>
+                                    @endif
+                                </li>
 
 
-<!--
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Payroll
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Log Payroll</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
-                            </nav>
-                        </div> -->
+
+
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
 
-                </div>
             </nav>
         </div>
 
@@ -149,8 +147,7 @@
                             <input type="time" id="jadwal_gaji_jam" name="jadwal_gaji_jam" class="form-control"
                                 required>
                         </div>
-                        <a href="{{ url('/jadwal_gaji') }}"
-                        class="btn btn-primary float-end">Kembali</a>
+                        <a href="{{ url('/jadwal_gaji') }}" class="btn btn-primary float-end">Kembali</a>
 
                         <!-- Pilih Karyawan untuk Pembayaran Gaji -->
                         <div class="mb-3">
@@ -166,7 +163,9 @@
                                         <th>Nama</th>
                                         <th>Gaji</th>
                                         <th>Status</th>
+                                        <th>Jadwal</th>
                                         <th>Pilih</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -176,6 +175,14 @@
                                             <td>{{ $daf_user->nama_user }}</td>
                                             <td>Rp{{ number_format($daf_user->gaji, 2, ',', '.') }}</td>
                                             <td>{{ $daf_user->status }}</td>
+                                            <td>
+                                                                @if($daf_user->jadwal_gaji_tanggal)
+                                                                    {{ \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->isValid() ? \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->format('d-m-Y') : 'Tanggal tidak valid' }}
+                                                                    at {{ $daf_user->jadwal_gaji_jam ?? '---' }}
+                                                                @else
+                                                                    'Belum Dijadwalkan'
+                                                                @endif
+                                                            </td>
                                             <td>
                                                 <input type="checkbox" class="user-checkbox" name="user_ids[]"
                                                     value="{{ $daf_user->id_user }}">

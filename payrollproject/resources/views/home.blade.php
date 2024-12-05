@@ -26,9 +26,14 @@
                 <!-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> -->
             </div>
+
         </form>
 
+
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item align-self-center">
+                <span class="text-white small"> {{ session('role', 'Guest') }}</span>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -41,6 +46,7 @@
                     <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
                 </ul>
             </li>
+
         </ul>
     </nav>
 
@@ -57,7 +63,7 @@
 
                         <a class="nav-link" href="{{ url('/user_perusahaan') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            User Perusahaan
+                            Karyawan
                         </a>
 
                         <a class="nav-link" href="{{ url('/perusahaan') }}">
@@ -71,28 +77,23 @@
                         </a>
 
 
+                                <li class="nav-item">
+                                @if(session('role') !== 'Admin')
+                                    <a class="nav-link" href="/log_payroll">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        Log Payroll
+                                    </a>
+                                    @endif
+                                </li>
 
+                        </ul>
 
-
-                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Payroll
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Log Payroll</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
-                            </nav>
-                        </div> -->
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
 
-                </div>
+
             </nav>
         </div>
 
@@ -101,62 +102,104 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
+
                     </ol>
                     <div class="row">
-
-
-
-                        <!-- Table for User Perusahaan -->
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                User Perusahaan Table
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start Date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start Date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <!-- Add more rows as needed -->
-                                    </tbody>
-                                </table>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">
+                                    Jumlah Karyawan : {{ $jumlah_user }} <!-- Menampilkan jumlah user -->
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link"
+                                        href="{{ url('/user_perusahaan') }}">Detail</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">
+                                    Jumlah Jabatan: {{ $jumlah_jabatan }}
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link"
+                                        href="{{ url('/user_perusahaan') }}">Detail</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-xl-5 col-md-6">
+                            <div class="card mb-4" style="max-width: 500px; margin: 0 auto;">
+                                <div class="card-header">
+                                    <strong>5 Gaji Tertinggi Karyawan</strong>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Grafik -->
+                                    <canvas id="gajiChart" style="max-width: 100%; height: 300px;"></canvas>
+
+                                    @if ($karyawanGajiTertinggi->isNotEmpty())
+                                        <p><strong>Nama:</strong> {{ $karyawanGajiTertinggi->first()->nama_user }}</p>
+                                        <p><strong>Jabatan:</strong> {{ $karyawanGajiTertinggi->first()->jabatan }}</p>
+                                        <p><strong>Gaji:</strong> Rp
+                                            {{ number_format($karyawanGajiTertinggi->first()->gaji, 0, ',', '.') }}
+                                        </p>
+                                    @else
+                                        <p>Belum ada data karyawan.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- table user perusahaan -->
+                        <div class="col-xl-12 col-md-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-1"></i>
+                                    Tabel karyawan
+                                </div>
+                                <div class="card-body">
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Jabatan</th>
+                                                <th>BANK</th>
+                                                <th>Gaji</th>
+                                                <th>Nomor Rekening</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Jabatan</th>
+                                                <th>BANK</th>
+                                                <th>Gaji</th>
+                                                <th>Nomor Rekening</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach($user_perusahaan as $user)
+                                                <tr>
+                                                    <td>{{ $user->nama_user }}</td>
+                                                    <td>{{ $user->jabatan }}</td>
+                                                    <td>{{ $user->alamat }}</td>
+                                                    <td>Rp {{ number_format($user->gaji, 0, ',', '.') }}</td>
+                                                    <td>{{ $user->norek_user }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
             </main>
@@ -174,6 +217,52 @@
             </footer>
         </div>
     </div>
+
+
+
+
+    <script>
+        window.onload = function () {
+            const ctx = document.getElementById('gajiChart').getContext('2d');
+
+            // Ambil data nama dan gaji dari variabel $karyawanGajiTertinggi
+            const labels = @json($karyawanGajiTertinggi->pluck('nama_user'));  // Nama karyawan
+            const data = @json($karyawanGajiTertinggi->pluck('gaji'));  // Gaji karyawan
+
+            const chartData = {
+                labels: labels,  // Nama karyawan
+                datasets: [{
+                    label: 'Gaji Karyawan',
+                    data: data,  // Gaji karyawan
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const config = {
+                type: 'bar',  // Tipe grafik bar
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: '5 Karyawan dengan Gaji Tertinggi'
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, config);  // Inisialisasi chart
+        };
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>

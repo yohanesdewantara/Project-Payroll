@@ -14,6 +14,7 @@ class UserController extends Controller
 
         return view('user_perusahaan.userb', compact('user_perusahaan'));
 
+
     }
 
     public function create()
@@ -49,7 +50,7 @@ class UserController extends Controller
             'norek_user' => $request->norek_user
         ]);
 
-        return redirect('user_perusahaan/create')->with('status', 'User berhasil dibuat');
+        return redirect('user_perusahaan/create')->with('status', 'karyawan berhasil dibuat');
     }
 
     public function edit(int $id_user)
@@ -95,7 +96,7 @@ class UserController extends Controller
             'norek_user' => $request->norek_user
         ]);
 
-        return redirect()->back()->with('status', 'User berhasil diupdate');
+        return redirect()->back()->with('status', 'Karyawan berhasil diupdate');
     }
 
     public function destroy(int $id_user)
@@ -103,7 +104,7 @@ class UserController extends Controller
         $user_perusahaan = UserPerusahaan::findOrFail($id_user);
         $user_perusahaan->delete();
 
-        return redirect()->back()->with('status', 'user berhasil di dihapus');
+        return redirect()->back()->with('status', 'Karyawan berhasil di dihapus');
 
     }
 

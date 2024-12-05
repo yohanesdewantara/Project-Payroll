@@ -26,6 +26,9 @@
         </form>
 
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item align-self-center">
+                <span class="text-white small"> {{ session('role', 'Guest') }}</span>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -66,6 +69,17 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                             Jadwal & Penggajian
                         </a>
+                        <li class="nav-item">
+                                @if(session('role') !== 'Admin')
+                                    <a class="nav-link" href="/log_payroll">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        Log Payroll
+                                    </a>
+                                    @endif
+                                </li>
+
 
 
 
@@ -84,10 +98,10 @@
                         </div> -->
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
+                <!-- <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
 
-                </div>
+                </div> -->
             </nav>
         </div>
 
@@ -134,9 +148,9 @@
 
                                                 <!-- Tombol tambah karyawan -->
                                                 <div class="col-md-9 text-end">
-                                                <a href="{{ url('user_perusahaan/create') }}"
-                                                    class="btn btn-primary ms-3">Tambah Karyawan</a>
-                                            </div>
+                                                    <a href="{{ url('user_perusahaan/create') }}"
+                                                        class="btn btn-primary ms-3">Tambah Karyawan</a>
+                                                </div>
                                         </form>
 
 
@@ -147,8 +161,7 @@
 
 
                                 <div class="card-body">
-                                    <!-- isi konten -->
-                                    <!-- {{$user_perusahaan}} -->
+
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
@@ -162,6 +175,7 @@
 
                                             </tr>
                                         </thead>
+
                                         <tbody>
                                             @foreach ($user_perusahaan as $daf_user)
                                                 <tr>
@@ -174,8 +188,7 @@
 
                                                     <td>
 
-                                                        <!-- <a href="{{url('user_perusahaan/' . $daf_user->id_user . '/edit')}}"
-                                                                                    class="btn btn-success mx-2">Ubah</a> -->
+
                                                         <a href="{{url('user_perusahaan/' . $daf_user->id_user . '/edit')}}"
                                                             class="btn btn-success mx-2">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -189,10 +202,7 @@
 
                                                         </a>
 
-                                                        <!-- <a class="btn btn-danger mx-1 btn-delete"
-                                                                                data-id="{{ $daf_user->id_user }}"
-                                                                                data-url="{{ url('user_perusahaan/' . $daf_user->id_user . '/delete') }}">
-                                                                                Hapus</a> -->
+
                                                         <a class="btn btn-danger mx-1 btn-delete"
                                                             data-id="{{ $daf_user->id_user }}"
                                                             data-url="{{ url('user_perusahaan/' . $daf_user->id_user . '/delete') }}">

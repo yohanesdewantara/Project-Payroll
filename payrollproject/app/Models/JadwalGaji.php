@@ -16,6 +16,11 @@ class JadwalGaji extends Model
 
 
     protected $table = 'jadwal_gaji'; //
+    public function perusahaan()
+    {
+        return $this->belongsTo(Perusahaan::class, 'id_perusahaan');
+    }
+
     public function userPerusahaan()
     {
         // return $this->belongsTo(UserPerusahaan::class, 'id_perusahaan', 'id_perusahaan');

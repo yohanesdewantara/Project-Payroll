@@ -29,6 +29,9 @@
         </form>
 
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item align-self-center">
+                <span class="text-white small"> {{ session('role', 'Guest') }}</span>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -57,7 +60,7 @@
 
                         <a class="nav-link" href="{{ route('home') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            User Perusahaan
+                            Karyawan
                         </a>
 
                         <a class="nav-link" href="/home">
@@ -69,28 +72,20 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                             Jadwal & Penggajian
                         </a>
+                        <li class="nav-item">
+                                @if(session('role') !== 'Admin')
+                                    <a class="nav-link" href="/log_payroll">
+                                        <div class="sb-nav-link-icon">
+                                            <i class="fas fa-book"></i>
+                                        </div>
+                                        Log Payroll
+                                    </a>
+                                    @endif
+                                </li>
 
-
-<!--
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Payroll
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Log Payroll</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">apalagi ya?</a>
-                            </nav>
-                        </div> -->
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
 
-                </div>
             </nav>
         </div>
 
@@ -105,7 +100,7 @@
 
                             @if(session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Sukses!</strong> User berhasil dibuat
+                                    <strong>Sukses!</strong> Karyawan berhasil dibuat
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
                                         aria-label="Close"></button>
                                 </div>
@@ -132,10 +127,7 @@
                                             @enderror
 
                                         </div>
-                                        <!-- <div class="mb3">
-                                            <label>id_user</label>
-                                            <input type="text" name="id_user" val classue="{{old('id_user')}}"/>
-                                        </div> -->
+
                                         <div class="mb3">
                                             <label>Alamat</label>
                                             <textarea name="alamat" class="form-control"
@@ -170,11 +162,11 @@
                                             @error('saldo') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
 
-                                        <div class="mb3">
+                                        <div class="mb3 mt-4">
                                             <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
 
-                                        </ffor>
+                                    </form>
 
                                 </div>
 
