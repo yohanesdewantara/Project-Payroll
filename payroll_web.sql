@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Des 2024 pada 11.12
+-- Waktu pembuatan: 09 Des 2024 pada 14.48
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.1.25
 
@@ -135,7 +135,8 @@ CREATE TABLE `log_payroll` (
 --
 
 INSERT INTO `log_payroll` (`id_log`, `id_user`, `id_perusahaan`, `amount`, `status`, `transfer_date`, `id_superadmin`, `id_adminpayroll`) VALUES
-(34, 50, 6, 110000000.00, 'SUCCESS', '2024-12-03 01:43:42', NULL, NULL);
+(36, 52, 6, 4500000.00, 'SUCCESS', '2024-12-07 05:32:49', NULL, NULL),
+(37, 58, 6, 2000000.00, 'SUCCESS', '2024-12-07 05:32:49', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +217,7 @@ CREATE TABLE `perusahaan` (
 --
 
 INSERT INTO `perusahaan` (`id_perusahaan`, `nama_perusahaan`, `alamat`, `nohp_perusahaan`, `norek_perusahaan`, `saldo`, `created_at`, `updated_at`, `id_admin`, `id_superadmin`, `id_adminpayroll`) VALUES
-(6, 'Pablo Company', 'jogja', '08310802803', '081321', 890000000.00, '2024-11-29 08:10:16', '2024-12-02 18:43:42', NULL, NULL, NULL);
+(6, 'Pablo Company', 'jogja', '08310802803', '0123456543', 1584000000.00, '2024-11-29 08:10:16', '2024-12-09 03:44:02', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -285,11 +286,16 @@ CREATE TABLE `user_perusahaan` (
 --
 
 INSERT INTO `user_perusahaan` (`id_user`, `id_perusahaan`, `nama_user`, `jabatan`, `alamat`, `gaji`, `norek_user`, `created_at`, `updated_at`, `id_admin`, `id_superadmin`, `id_adminpayroll`, `status`, `jadwal_gaji_tanggal`, `jadwal_gaji_jam`) VALUES
-(46, NULL, 'Yohanes Dewantara', 'Project Manager', 'BCA', 100000000.00, '72220531', '2024-12-02 08:33:02', '2024-12-02 08:33:02', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
-(47, NULL, 'Andika Pratamax', 'Marketing', 'BCA', 100000000.00, '72220599', '2024-12-02 08:55:15', '2024-12-02 09:12:29', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
-(48, NULL, 'Lidya', 'HR Manager', 'BNI', 100000000.00, '72220552', '2024-12-02 09:05:59', '2024-12-02 09:05:59', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
-(49, NULL, 'Putri', 'Customer Service', 'BNI', 100000000.00, '72220592', '2024-12-02 09:06:58', '2024-12-02 09:12:43', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
-(50, NULL, 'Joe Pablo', 'IT Specialist', 'BRI', 110000000.00, '7222053113', '2024-12-02 09:13:30', '2024-12-02 18:43:42', NULL, NULL, NULL, 'PAID', '2024-12-03', '09:43:00');
+(46, NULL, 'Yohanes Dewantara', 'Project Manager', 'BCA', 100000000.00, '0123456531', '2024-12-02 08:33:02', '2024-12-09 03:02:28', NULL, NULL, NULL, 'ACTIVE', '2024-12-26', '08:04:00'),
+(47, NULL, 'Andika Pratamax', 'Marketing', 'BCA', 100000000.00, '0123456666', '2024-12-02 08:55:15', '2024-12-09 03:02:28', NULL, NULL, NULL, 'ACTIVE', '2024-12-26', '08:04:00'),
+(48, NULL, 'Lidya', 'HR Manager', 'BNI', 95500000.00, '72220552', '2024-12-02 09:05:59', '2024-12-09 03:02:28', NULL, NULL, NULL, 'ACTIVE', '2024-12-26', '08:04:00'),
+(52, NULL, 'Riko ars', 'HR Manager', 'BCA', 4500000.00, '0123456789', '2024-12-05 01:26:25', '2024-12-09 03:02:28', NULL, NULL, NULL, 'PAID', '2024-12-26', '08:04:00'),
+(58, NULL, 'Dewantara Yohanes', 'Customer Service', 'BCA', 2000000.00, '61293213877', '2024-12-06 22:29:23', '2024-12-09 03:02:28', NULL, NULL, NULL, 'PAID', '2024-12-26', '08:04:00'),
+(65, NULL, 'Dr. Kaia Watsica V', 'HR Manager', 'BCA', 16741488.00, '2524534728297', '2024-12-09 05:27:58', '2024-12-09 05:29:44', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(66, NULL, 'Mr. Immanuel Corwin', 'HR Manager', 'BNI', 22310950.00, '962369572', '2024-12-09 05:27:58', '2024-12-09 05:30:02', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(67, NULL, 'Prince Muller', 'Project Manager', 'BRI', 18818347.00, '22563935402', '2024-12-09 05:27:58', '2024-12-09 05:30:21', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(73, NULL, 'Kaitlin Jakubowski', 'Customer Service', 'Mandiri', 26457606.00, '46778262277164', '2024-12-09 05:27:58', '2024-12-09 05:33:49', NULL, NULL, NULL, 'ACTIVE', NULL, NULL),
+(108, NULL, 'Domingo Schuppe III', 'IT Specialist', 'BCA', 25694524.00, '3885179117928', '2024-12-09 05:27:58', '2024-12-09 05:34:01', NULL, NULL, NULL, 'ACTIVE', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -422,7 +428,7 @@ ALTER TABLE `jadwal_gaji2`
 -- AUTO_INCREMENT untuk tabel `log_payroll`
 --
 ALTER TABLE `log_payroll`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -452,7 +458,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `user_perusahaan`
 --
 ALTER TABLE `user_perusahaan`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
