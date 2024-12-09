@@ -94,6 +94,7 @@ class PayrollController extends Controller
         $banks = UserPerusahaan::pluck('alamat')->unique();
         $perusahaan = Perusahaan::find(6); // Ambil data perusahaan dengan ID 6
 
+
         // Ambil bulan dari request
         $bulan = $request->bulan;
         $tahun = $request->tahun;

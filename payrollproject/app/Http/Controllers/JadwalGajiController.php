@@ -49,10 +49,6 @@ class JadwalGajiController extends Controller
 
 
 
-
-
-
-
     public function tambahjadwal()
     {
 

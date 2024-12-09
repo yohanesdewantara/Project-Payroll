@@ -75,11 +75,14 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-
-                        <a class="nav-link" href="/user_perusahaan">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            Karyawan
-                        </a>
+                        <li class="nav-item">
+                            @if(session('role') === 'Super Admin' || session('role') === 'Admin')
+                                <a class="nav-link" href="{{ url('/user_perusahaan') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                    Karyawan
+                                </a>
+                            @endif
+                        </li>
 
                         <a class="nav-link" href="/perusahaan">
                             <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
@@ -100,6 +103,10 @@
                                     </a>
                                     @endif
                                 </li>
+
+
+
+
 
 
 
@@ -176,13 +183,13 @@
                                             <td>Rp{{ number_format($daf_user->gaji, 2, ',', '.') }}</td>
                                             <td>{{ $daf_user->status }}</td>
                                             <td>
-                                                                @if($daf_user->jadwal_gaji_tanggal)
-                                                                    {{ \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->isValid() ? \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->format('d-m-Y') : 'Tanggal tidak valid' }}
-                                                                    at {{ $daf_user->jadwal_gaji_jam ?? '---' }}
-                                                                @else
-                                                                    'Belum Dijadwalkan'
-                                                                @endif
-                                                            </td>
+                                                @if($daf_user->jadwal_gaji_tanggal)
+                                                    {{ \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->isValid() ? \Carbon\Carbon::parse($daf_user->jadwal_gaji_tanggal)->format('d-m-Y') : 'Tanggal tidak valid' }}
+                                                    at {{ $daf_user->jadwal_gaji_jam ?? '---' }}
+                                                @else
+                                                    'Belum Dijadwalkan'
+                                                @endif
+                                            </td>
                                             <td>
                                                 <input type="checkbox" class="user-checkbox" name="user_ids[]"
                                                     value="{{ $daf_user->id_user }}">

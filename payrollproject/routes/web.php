@@ -52,6 +52,9 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::post('/jadwal_gaji/set', [PayrollController::class, 'setJadwalGaji'])->name('setJadwalGaji');
 
+Route::get('/user_perusahaan', [UserController::class, 'user_perusahaan'])
+    ->middleware('role:Super Admin, Admin')
+    ->name('user_perusahaan');
 
 
 

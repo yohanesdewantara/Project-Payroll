@@ -31,6 +31,8 @@
 
     <p>(Bulan: {{ \Carbon\Carbon::create()->month($bulan)->year($tahun ?: now()->year)->translatedFormat('F Y') }})</p>
 
+    <p>Nama Perusahaan: <strong>{{ $perusahaan->nama_perusahaan }}</strong></p>
+
 
 
 

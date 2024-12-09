@@ -61,10 +61,17 @@
                             Dashboard
                         </a>
 
-                        <a class="nav-link" href="{{ url('/user_perusahaan') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            Karyawan
-                        </a>
+
+                        <li class="nav-item">
+                            @if(session('role') === 'Super Admin' || session('role') === 'Admin')
+                                <a class="nav-link" href="{{ url('/user_perusahaan') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                    Karyawan
+                                </a>
+                            @endif
+                        </li>
+
+
 
                         <a class="nav-link" href="{{ url('/perusahaan') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
@@ -77,16 +84,16 @@
                         </a>
 
 
-                                <li class="nav-item">
-                                @if(session('role') !== 'Admin')
-                                    <a class="nav-link" href="/log_payroll">
-                                        <div class="sb-nav-link-icon">
-                                            <i class="fas fa-book"></i>
-                                        </div>
-                                        Log Payroll
-                                    </a>
-                                    @endif
-                                </li>
+                        <li class="nav-item">
+                            @if(session('role') !== 'Admin')
+                                <a class="nav-link" href="/log_payroll">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    Log Payroll
+                                </a>
+                            @endif
+                        </li>
 
                         </ul>
 
@@ -132,24 +139,27 @@
                         </div>
 
 
-
-                        <div class="col-xl-5 col-md-6">
-                            <div class="card mb-4" style="max-width: 500px; margin: 0 auto;">
-                                <div class="card-header">
+                        <div class="col-xl-12 col-md-12">
+                            <div class="card mb-4">
+                                <div class="card-header text-center">
                                     <strong>5 Gaji Tertinggi Karyawan</strong>
                                 </div>
                                 <div class="card-body">
                                     <!-- Grafik -->
-                                    <canvas id="gajiChart" style="max-width: 100%; height: 300px;"></canvas>
+                                    <div style="width: 100%; height: 400px;">
+                                        <canvas id="gajiChart" style="width: 100%; height: 100%;"></canvas>
+                                    </div>
 
                                     @if ($karyawanGajiTertinggi->isNotEmpty())
-                                        <p><strong>Nama:</strong> {{ $karyawanGajiTertinggi->first()->nama_user }}</p>
-                                        <p><strong>Jabatan:</strong> {{ $karyawanGajiTertinggi->first()->jabatan }}</p>
-                                        <p><strong>Gaji:</strong> Rp
-                                            {{ number_format($karyawanGajiTertinggi->first()->gaji, 0, ',', '.') }}
-                                        </p>
+                                        <div class="mt-4">
+                                            <p><strong>Nama:</strong> {{ $karyawanGajiTertinggi->first()->nama_user }}</p>
+                                            <p><strong>Jabatan:</strong> {{ $karyawanGajiTertinggi->first()->jabatan }}</p>
+                                            <p><strong>Gaji:</strong> Rp
+                                                {{ number_format($karyawanGajiTertinggi->first()->gaji, 0, ',', '.') }}
+                                            </p>
+                                        </div>
                                     @else
-                                        <p>Belum ada data karyawan.</p>
+                                        <p class="text-center">Belum ada data karyawan.</p>
                                     @endif
                                 </div>
                             </div>
@@ -273,6 +283,9 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>

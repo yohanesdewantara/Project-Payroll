@@ -72,10 +72,20 @@
                             Dashboard
                         </a>
 
-                        <a class="nav-link" href="/user_perusahaan">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            Karyawan
-                        </a>
+
+
+
+
+                        <li class="nav-item">
+                            @if(session('role') === 'Super Admin' || session('role') === 'Admin')
+                                <a class="nav-link" href="{{ url('/user_perusahaan') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                    Karyawan
+                                </a>
+                            @endif
+                        </li>
+
+
 
                         <a class="nav-link" href="/perusahaan">
                             <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
