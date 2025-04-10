@@ -1,6 +1,6 @@
 # Project-Payroll
 
-**Perancangan Sistem** : https://drive.google.com/file/d/1-yODUie6ptSm8GLLv-O9P_s1l2cwsURm/view?usp=sharing
+**Link gambar Perancangan Sistem** : https://drive.google.com/file/d/1-yODUie6ptSm8GLLv-O9P_s1l2cwsURm/view?usp=sharing
 
 **LOGIN**
 ![image](https://github.com/user-attachments/assets/fd9075af-963f-4a4f-a53d-58aed5509c08)
