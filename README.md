@@ -42,6 +42,9 @@
 # FRAMEWORK
 laravel 10
 
+# Database
+My SQL
+
 # LOGIN
 username : admin
 password :admin
