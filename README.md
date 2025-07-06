@@ -1,6 +1,6 @@
 # Project-Payroll
 
-Universitas Kristen Duta Wacana (UKDW) melalui Program Studi Sistem Informasi menghadirkan dosen tamu, yaitu seorang programmer dari PT Bank Central Asia Tbk (BCA). Dalam kegiatan ini, mahasiswa diberikan tugas untuk membuat aplikasi untuk payroll yang mengadopsi konsep payroll bca namun lebih ringan.
+Dosen tamu, tugas nyata, insight baru! Salah satu pengalaman berkesan di semester 5 adalah membuat aplikasi payroll sederhana terinspirasi dari konsep payroll BCA. Belajar langsung dari programmer BCA memberikan gambaran bagaimana industri perbankan membangun sistem besar yang scalable. Ilmu ini jadi motivasi untuk terus belajar dan berkarya di dunia IT!
 
 **Link gambar Perancangan Sistem** : https://drive.google.com/file/d/1-yODUie6ptSm8GLLv-O9P_s1l2cwsURm/view?usp=sharing
 
