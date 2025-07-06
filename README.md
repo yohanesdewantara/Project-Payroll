@@ -9,7 +9,8 @@ Dosen tamu, tugas nyata, insight baru! Salah satu pengalaman berkesan di semeste
 ![image](https://github.com/user-attachments/assets/fd9075af-963f-4a4f-a53d-58aed5509c08)
 
 **DASHBOARD**
-![image](https://github.com/user-attachments/assets/e9fbdcd5-7f59-4aa1-8d1d-2be3d064e69a)
+![Screenshot 2025-02-02 150157](https://github.com/user-attachments/assets/dfb26887-a05e-42a2-8801-e48409cad594)
+
 
 **HALAMAN KARYAWAN**
 ![image](https://github.com/user-attachments/assets/d35a4efe-f48e-4b25-a9ef-61034b87dd97)
